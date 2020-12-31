@@ -9,7 +9,7 @@ public class EnemyView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        target = GameController.singleton._Tower.transform;
     }
 
     // Update is called once per frame

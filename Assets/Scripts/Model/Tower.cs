@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Tower : MonoBehaviour
 {
-    
     public float AttackRange { get; set; }
     public float AttackSpeed { get; set; }
     public float Damage { get; set; }
@@ -34,9 +34,10 @@ public class Tower : MonoBehaviour
 
 
 
-
-
-
+    private void Awake()
+    {
+        GameController.singleton._Tower = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -48,3 +49,4 @@ public class Tower : MonoBehaviour
         
     }
 }
+

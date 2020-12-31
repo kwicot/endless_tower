@@ -14,6 +14,7 @@ public class Spawner : MonoBehaviour
     public int BossWave { get; set; }
     public int CurrentWave { get; }
     public float PauseBetweenWave { get; set; }
+    public float SpawnInterval { get; set; }
     public List<GameObject> L_Enemy { get; set; }
 
 
@@ -26,17 +27,7 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        //EnemyPerWave = 100;
-        //PauseBetweenWave = 10;
-
-
-        L_Enemy = new List<GameObject>();
-        GameObject[] points = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        for(int i = 0; i <points.Length -1; i++)
-        {
-            L_SpawnPoints.Add(points[i].transform.position);
-        }
-        CanTime = true;
+        Init();
     }
 
     // Update is called once per frame
@@ -46,8 +37,24 @@ public class Spawner : MonoBehaviour
         {
             RedProgressBar.fillAmount = Timer / PauseBetweenWave;
             Timer += Time.deltaTime;
-            if (Timer > PauseBetweenWave) NewWave();
+            if (Timer > PauseBetweenWave) StartCoroutine(NewWave());
         }
+    }
+    void Init()
+    {
+        L_Enemy = new List<GameObject>();
+        GameObject[] points = GameObject.FindGameObjectsWithTag("SpawnPoint");
+        for (int i = 0; i < points.Length - 1; i++)
+        {
+            L_SpawnPoints.Add(points[i].transform.position);
+        }
+        CanTime = true;
+
+
+        EnemyPerWave = GameController.singleton.EnemyPerWave;
+        PauseBetweenWave = GameController.singleton.WaveInterval;
+        SpawnInterval = GameController.singleton.SpawnInterval;
+
     }
 
     IEnumerator NewWave()
@@ -62,7 +69,7 @@ public class Spawner : MonoBehaviour
             GameObject obj = Instantiate(EnemyPrefab, L_SpawnPoints[x], Quaternion.identity);
             L_Enemy.Add(obj);
             GreenProgressBar.fillAmount = i / EnemyPerWave;
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(SpawnInterval);
         }
 
     }
@@ -70,6 +77,7 @@ public class Spawner : MonoBehaviour
     {
         StartCoroutine(NewWave());
     }
+
 
 
 }

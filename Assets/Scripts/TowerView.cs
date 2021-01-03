@@ -14,6 +14,15 @@ public class TowerView : MonoBehaviour
     private float timeCalculate = 0.1f;
     private void Update()
     {
+        if(tower.HP < tower.HPMax)
+        {
+            tower.HP += tower.Regeneration * Time.deltaTime;
+            if (tower.HP > tower.HPMax) tower.HP = tower.HPMax;
+        }
+        AttackUpdate();
+    }
+    void AttackUpdate()
+    {
         if (GameController.singleton.GameState == GameState.Game)
         {
             timeCalculate -= Time.deltaTime;
@@ -30,9 +39,13 @@ public class TowerView : MonoBehaviour
                         {
                             if (L_Enemy[i] != null)
                             {
-                                if (Vector3.Distance(transform.position, L_Enemy[i].transform.position) <
-                                    Vector3.Distance(closets.transform.position, transform.position))
-                                    closets = L_Enemy[i];
+                                if (closets != null)
+                                {
+                                    if (Vector3.Distance(transform.position, L_Enemy[i].transform.position) <
+                                        Vector3.Distance(closets.transform.position, transform.position))
+                                        closets = L_Enemy[i];
+                                }
+                                else closets = L_Enemy[i];
                             }
                             else
                             {

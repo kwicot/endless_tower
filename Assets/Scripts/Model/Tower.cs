@@ -21,6 +21,7 @@ public class Tower
     public float HP;
     public float HPMax;
     public float Regeneration;
+    public float Defense;
     public float BlockChance;
     public float BlockDamage;
     public float SlowAuraRange;

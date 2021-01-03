@@ -9,7 +9,7 @@ public class TowerView : MonoBehaviour
 
     void Start()
     {
-        GameController.singleton._Tower = this;
+        GameController.singleton.tower = this;
     }
     private float timeCalculate = 0.1f;
     private void Update()

@@ -9,8 +9,8 @@ public class GameController : MonoBehaviour
 {
     public static GameController singleton { get; private set; }
 
-    public TowerView _Tower;
-    public Spawner _Spawner;
+    public TowerView tower;
+    public Spawner spawner;
     public List<EnemyView> L_Enemy = new List<EnemyView>();
 
 
@@ -61,10 +61,10 @@ public class GameController : MonoBehaviour
                     {
                         if (L_Enemy[i] != null)
                         {
-                            var distance = Vector3.Distance(L_Enemy[i].gameObject.transform.position, _Tower.transform.position);
+                            var distance = Vector3.Distance(L_Enemy[i].gameObject.transform.position, tower.transform.position);
                             if (distance < 2f)
                             {
-                                _Tower.TakeDamage(L_Enemy[i].Damage);
+                                tower.TakeDamage(L_Enemy[i].Damage);
                                 Destroy(L_Enemy[i].gameObject);
                                 L_Enemy.RemoveAt(i);
                             }
@@ -87,7 +87,7 @@ public class GameController : MonoBehaviour
                 i--;
             }
         }
-        if (L_Enemy.Count == 0) _Spawner.CanTime = true;
+        if (L_Enemy.Count == 0) spawner.CanTime = true;
         //Вознаграждение
     }
     

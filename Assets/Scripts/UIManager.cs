@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+
+
+
     public Button TimeButton0;
     public Button TimeButton2;
     public Button TimeButton4;
@@ -17,16 +20,19 @@ public class UIManager : MonoBehaviour
     public Text CurrentWaveText;
     void Start()
     {
-
     }
 
+    float hp => GameController.singleton.tower.tower.HP;
+    float regen => GameController.singleton.tower.tower.Regeneration;
     void Update()
     {
-        WaveGreenProgressBar.fillAmount = GameController.singleton.L_Enemy.Count / (float)GameController.singleton._Spawner.EnemyPerWave;
-        WaveRedProgressBar.fillAmount = GameController.singleton._Spawner.Timer / GameController.singleton._Spawner.PauseBetweenWave;
-        CurrentWaveText.text = GameController.singleton._Spawner.CurrentWave.ToString();
-        TowerHealthProgressBar.fillAmount = GameController.singleton._Tower.tower.HP / GameController.singleton._Tower.tower.HPMax;
-        TowerHealthText.text = GameController.singleton._Tower.tower.HP.ToString();
+        WaveGreenProgressBar.fillAmount = GameController.singleton.L_Enemy.Count / (float)GameController.singleton.spawner.EnemyPerWave;
+        WaveRedProgressBar.fillAmount = GameController.singleton.spawner.Timer / GameController.singleton.spawner.PauseBetweenWave;
+        CurrentWaveText.text = GameController.singleton.spawner.CurrentWave.ToString();
+        TowerHealthProgressBar.fillAmount = GameController.singleton.tower.tower.HP / GameController.singleton.tower.tower.HPMax;
+        TowerHealthText.text = Mathf.Round(hp).ToString() + "( " + Mathf.Round(regen).ToString() + " )";
+        TowerAtackText.text = GameController.singleton.tower.tower.Damage.ToString();
+        TowerDefenseText.text = GameController.singleton.tower.tower.Defense.ToString();
     }
 
     public void ChangeTime(int id)
@@ -70,9 +76,5 @@ public class UIManager : MonoBehaviour
                 }
                 break;
         }
-    }
-    void OnEnemyKilled()
-    {
-
     }
 }

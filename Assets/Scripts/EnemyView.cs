@@ -15,7 +15,7 @@ public class EnemyView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        target = GameController.singleton._Tower.transform;
+        target = GameController.singleton.tower.transform;
         Rb = GetComponent<Rigidbody>();
     }
 

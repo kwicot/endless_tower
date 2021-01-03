@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        GameController.singleton._Spawner = this;
+        GameController.singleton.spawner = this;
         Init();
     }
 

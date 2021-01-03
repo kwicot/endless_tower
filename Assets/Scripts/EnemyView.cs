@@ -34,7 +34,7 @@ public class EnemyView : MonoBehaviour
         {
             if (Time.timeScale <= 0.1f) return;
 
-            transform.position = Vector3.MoveTowards(transform.position, target.position, 0.1f * enemy.Speed);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, 0.1f * enemy.Speed * Time.timeScale);
         }
     }
 }

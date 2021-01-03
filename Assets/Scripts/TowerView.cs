@@ -5,13 +5,51 @@ using UnityEngine;
 public class TowerView : MonoBehaviour
 {
     public Tower tower;
-    private void Awake()
-    {
-    }
-    // Start is called before the first frame update
+    private List<EnemyView> L_Enemy => GameController.singleton.L_Enemy;
+
     void Start()
     {
         GameController.singleton._Tower = this;
+    }
+    private float timeCalculate = 0.1f;
+    private void Update()
+    {
+        if (GameController.singleton.GameState == GameState.Game)
+        {
+            timeCalculate -= Time.deltaTime;
+            if (timeCalculate <= 0) //Tower logic
+            {
+                timeCalculate = tower.AttackSpeed;
+                var count = L_Enemy.Count;
+                if (count > 0)
+                {
+                    var closets = L_Enemy[0];
+                    if (count > 1)
+                    {
+                        for (int i = 1; i < L_Enemy.Count; i++)
+                        {
+                            if (L_Enemy[i] != null)
+                            {
+                                if (Vector3.Distance(transform.position, L_Enemy[i].transform.position) <
+                                    Vector3.Distance(closets.transform.position, transform.position))
+                                    closets = L_Enemy[i];
+                            }
+                            else
+                            {
+                                L_Enemy.RemoveAt(i);
+                                i--;
+                            }
+
+                        }
+                    }
+                    var distance = Vector3.Distance(closets.gameObject.transform.position, transform.position);
+                    if (distance < tower.AttackRange)
+                    {
+                        closets.TakeDamage(tower.Damage);
+                    }
+                }
+            } //Tower logic end
+        }
     }
 
 
@@ -33,4 +71,5 @@ public class TowerView : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 2);
     }
+    
 }

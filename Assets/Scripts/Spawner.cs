@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class Spawner : MonoBehaviour
 {
     public bool IsNewSpawner = false;
-    public EnemyView EnemyPrefab;
     public EnemyView[] EnemiesPrefab;
+
+
     public Image GreenProgressBar;
     public Image RedProgressBar;
 

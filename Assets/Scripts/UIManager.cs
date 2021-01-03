@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     public Text CurrentWaveText;
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -70,5 +70,9 @@ public class UIManager : MonoBehaviour
                 }
                 break;
         }
+    }
+    void OnEnemyKilled()
+    {
+
     }
 }

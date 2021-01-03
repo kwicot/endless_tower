@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
@@ -9,13 +8,12 @@ public class Spawner : MonoBehaviour
     public EnemyView[] EnemiesPrefab;
 
 
-    public Image GreenProgressBar;
-    public Image RedProgressBar;
+    
 
 
     public int EnemyPerWave { get; set; }
     public int BossWave { get; set; }
-    public int CurrentWave { get; }
+    public int CurrentWave { get; private set; }
     public float PauseBetweenWave { get; set; }
     public float SpawnInterval { get; set; }
     public List<GameObject> L_Enemy { get; set; }
@@ -26,7 +24,7 @@ public class Spawner : MonoBehaviour
     List<Vector3> L_SpawnPoints = new List<Vector3>();
 
 
-    float Timer;
+    public float Timer;
     public bool CanTime;
 
     void Start()
@@ -38,16 +36,16 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GreenProgressBar.fillAmount = GameController.singleton.L_Enemy.Count / (float)EnemyPerWave;
+        
         if (CanTime)
         {
-            RedProgressBar.fillAmount = Timer / PauseBetweenWave;
             Timer += Time.deltaTime;
             if (Timer > PauseBetweenWave) StartCoroutine(NewWave());
         }
     }
     void Init()
     {
+        CurrentWave = 0;
         L_Enemy = new List<GameObject>();
         GameObject[] points = GameObject.FindGameObjectsWithTag("SpawnPoint");
         for (int i = 0; i < points.Length - 1; i++)
@@ -65,7 +63,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator NewWave()
     {
-        RedProgressBar.fillAmount = 0;
+        CurrentWave++;
         Timer = 0;
         CanTime = false;
         

@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimeManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
-    public Button button0;
-    public Button button2;
-    public Button button4;
+    public Button Button0;
+    public Button Button2;
+    public Button Button4;
+    public Image GreenProgressBar;
+    public Image RedProgressBar;
+    public Text CurrentWaveText;
     void Start()
     {
         
@@ -15,14 +18,16 @@ public class TimeManager : MonoBehaviour
 
     void Update()
     {
-        
+        GreenProgressBar.fillAmount = GameController.singleton.L_Enemy.Count / (float)GameController.singleton._Spawner.EnemyPerWave;
+        RedProgressBar.fillAmount = GameController.singleton._Spawner.Timer / GameController.singleton._Spawner.PauseBetweenWave;
+        CurrentWaveText.text = GameController.singleton._Spawner.CurrentWave.ToString();
     }
 
-    public void ButtonPressed(int id)
+    public void ChangeTime(int id)
     {
-        button0.image.color = Color.white;
-        button2.image.color = Color.white;
-        button4.image.color = Color.white;
+        Button0.image.color = Color.white;
+        Button2.image.color = Color.white;
+        Button4.image.color = Color.white;
         switch (id)
         {
             case 0:
@@ -32,9 +37,10 @@ public class TimeManager : MonoBehaviour
                     else
                     {
                         Time.timeScale = 0;
-                        button0.image.color = Color.gray;
+                        Button0.image.color = Color.gray;
                     }
-                }break;
+                }
+                break;
             case 2:
                 {
                     if (Time.timeScale == 2)
@@ -42,7 +48,7 @@ public class TimeManager : MonoBehaviour
                     else
                     {
                         Time.timeScale = 2;
-                        button2.image.color = Color.gray;
+                        Button2.image.color = Color.gray;
                     }
                 }
                 break;
@@ -53,7 +59,7 @@ public class TimeManager : MonoBehaviour
                     else
                     {
                         Time.timeScale = 4;
-                        button4.image.color = Color.gray;
+                        Button4.image.color = Color.gray;
                     }
                 }
                 break;

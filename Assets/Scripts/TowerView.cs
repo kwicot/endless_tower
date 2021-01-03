@@ -14,13 +14,8 @@ public class TowerView : MonoBehaviour
         GameController.singleton._Tower = this;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    public void Damage(float damage)
+    public void TakeDamage(float damage)
     {
         tower.HP -= damage;
         

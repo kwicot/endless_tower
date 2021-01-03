@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
-    public bool IsDebug = false;
+    public bool IsNewSpawner = false;
     public EnemyView EnemyPrefab;
     public EnemyView[] EnemiesPrefab;
     public Image GreenProgressBar;
@@ -68,7 +68,7 @@ public class Spawner : MonoBehaviour
         
         for(int i = 0; i< EnemyPerWave ; i++)
         {
-            if (!IsDebug)
+            if (!IsNewSpawner)
             { //Old spawner
                 var randomPoint = UnityEngine.Random.Range(0, L_SpawnPoints.Count);
                 var randomEnemy = UnityEngine.Random.Range(0, EnemiesPrefab.Length - 2); // -2 boss

@@ -34,7 +34,17 @@ public class EnemyView : MonoBehaviour
         {
             if (Time.timeScale <= 0.1f) return;
 
-            transform.position = Vector3.MoveTowards(transform.position, target.position, 0.1f * enemy.Speed * Time.timeScale);
+            transform.position = Vector3.MoveTowards(transform.position, target.position, 0.01f * enemy.Speed * Time.timeScale);
         }
+    }
+    public void TakeDamage(float damage)
+    {
+        enemy.HP -= damage;
+        if(enemy.HP <= 0)
+        {
+            Destroy(gameObject);
+            GameController.singleton.EnemyKilled(enemy.Loot);
+        }
+        Debug.Log("Enemy HP= " + enemy.HP);
     }
 }

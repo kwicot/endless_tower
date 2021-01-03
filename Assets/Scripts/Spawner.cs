@@ -27,16 +27,18 @@ public class Spawner : MonoBehaviour
 
 
     float Timer;
-    bool CanTime;
+    public bool CanTime;
 
     void Start()
     {
+        GameController.singleton._Spawner = this;
         Init();
     }
 
     // Update is called once per frame
     void Update()
     {
+        GreenProgressBar.fillAmount = GameController.singleton.L_Enemy.Count / (float)EnemyPerWave;
         if (CanTime)
         {
             RedProgressBar.fillAmount = Timer / PauseBetweenWave;
@@ -90,7 +92,7 @@ public class Spawner : MonoBehaviour
 
 
             
-            GreenProgressBar.fillAmount = i / EnemyPerWave; //(float) 
+            Debug.Log("Green progress bar fill= " + i / EnemyPerWave);
             yield return new WaitForSeconds(SpawnInterval);
         }
 

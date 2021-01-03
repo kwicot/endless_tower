@@ -10,6 +10,7 @@ public class GameController : MonoBehaviour
     public static GameController singleton { get; private set; }
 
     public TowerView _Tower;
+    public Spawner _Spawner;
     public List<EnemyView> L_Enemy = new List<EnemyView>();
 
 
@@ -86,6 +87,7 @@ public class GameController : MonoBehaviour
                 i--;
             }
         }
+        if (L_Enemy.Count == 0) _Spawner.CanTime = true;
         //Вознаграждение
     }
     

@@ -1,52 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
-public class Tower : MonoBehaviour
+public class Tower
 {
-    public float AttackRange { get; set; }
-    public float AttackSpeed { get; set; }
-    public float Damage { get; set; }
-    public float CriticalDamageChance { get; set; }
-    public float CriticalDamageMultiplier { get; set; }
-    public float MultiFireChance { get; set; }
-    public int MultiFireTargets { get; set; }
-    public float RapidFireChance { get; set; }
-    public float RapidFireTime { get; set; }
-    public float BounceChance { get; set; }
-    public float BounceRangeMax { get; set; }
-    public int BounceCountMax { get; set; }
-    public float BlackHoleChance { get; set; }
-    public float BlackHoleTime { get; set; }
+    public float AttackRange;
+    public float AttackSpeed;
+    public float Damage;
+    public float CriticalDamageChance;
+    public float CriticalDamageMultiplier;
+    public float MultiFireChance;
+    public int MultiFireTargets;
+    public float RapidFireChance;
+    public float RapidFireTime;
+    public float BounceChance;
+    public float BounceRangeMax;
+    public int BounceCountMax;
+    public float BlackHoleChance;
+    public float BlackHoleTime;
 
 
-    public float HP { get; set; }
-    public float Regeneration { get; set; }
-    public float BlockChance { get; set; }
-    public float BlockDamage { get; set; }
-    public float SlowAuraRange { get; set; }
-    public float SlowAuraPerfomance { get; set; }
-    public float DamageAuraRange { get; set; }
-    public float DamageAuraPerfomance { get; set; }
-    public float DamageIncreaseAuraRange { get; set; }
-    public float DamageIncreaseAuraPerfomance { get; set; }
+    public float HP;
+    public float Regeneration;
+    public float BlockChance;
+    public float BlockDamage;
+    public float SlowAuraRange;
+    public float SlowAuraPerfomance;
+    public float DamageAuraRange;
+    public float DamageAuraPerfomance;
+    public float DamageIncreaseAuraRange;
+    public float DamageIncreaseAuraPerfomance ;
 
 
 
-    private void Awake()
-    {
-        GameController.singleton._Tower = this;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
 

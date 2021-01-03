@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 
-[System.Serializable]
-public class Enemy
+namespace Model
 {
-    public float HP { get; set; }
-    public float Speed { get; set; }
-    public float Damage { get; set; }
-    public EnemyType Type { get; set; }
-    public Dictionary<int, int> Loot { get; set; }
+    [System.Serializable]
+    public class Enemy
+    {
+        public float HP;
+        public float Speed;
+        public float Damage;
+        public EnemyType Type;
+        public Dictionary<int, int> Loot;
+    }
 
-    public Enemy() { }
-}
+    public enum EnemyType
+    {
+        Default = 0,
 
-public enum EnemyType
-{
-    Default = 0,
-    
+    }
 }

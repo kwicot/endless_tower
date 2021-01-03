@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject EnemyPrefab;
+    public EnemyView EnemyPrefab;
+    public EnemyView[] EnemiesPrefab;
     public Image GreenProgressBar;
     public Image RedProgressBar;
 
@@ -63,12 +64,16 @@ public class Spawner : MonoBehaviour
         Timer = 0;
         CanTime = false;
         
-        for(int i = 0, x = 0; i< EnemyPerWave ;x++, i++)
+        for(int i = 0; i< EnemyPerWave ; i++)
         {
-            if (x == L_SpawnPoints.Count) x = 0;
-            GameObject obj = Instantiate(EnemyPrefab, L_SpawnPoints[x], Quaternion.identity);
-            L_Enemy.Add(obj);
-            GreenProgressBar.fillAmount = i / EnemyPerWave;
+            var randomPoint = UnityEngine.Random.Range(0, L_SpawnPoints.Count);
+            var randomEnemy = UnityEngine.Random.Range(0, EnemiesPrefab.Length-2); // -2 boss
+            // if (x == L_SpawnPoints.Count) x = 0;
+            // var obj = Instantiate<EnemyView>(EnemyPrefab, L_SpawnPoints[randomPoint], Quaternion.identity);
+            var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], L_SpawnPoints[randomPoint], Quaternion.identity);
+            obj.Init();
+            GameController.singleton.L_Enemy.Add(obj);
+            GreenProgressBar.fillAmount = i / EnemyPerWave; //(float) 
             yield return new WaitForSeconds(SpawnInterval);
         }
 

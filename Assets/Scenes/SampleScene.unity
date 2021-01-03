@@ -372,6 +372,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3430937361562283869, guid: eb30a9c18b771504bba70c2cd6b80392, type: 3}
+      propertyPath: EnemyPerWave
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3430937361562283869, guid: eb30a9c18b771504bba70c2cd6b80392, type: 3}
+      propertyPath: WaveInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3430937361562283869, guid: eb30a9c18b771504bba70c2cd6b80392, type: 3}
+      propertyPath: SpawnInterval
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 3430937361562283870, guid: eb30a9c18b771504bba70c2cd6b80392, type: 3}
       propertyPath: m_Name
       value: GameController
@@ -732,6 +744,10 @@ PrefabInstance:
     - target: {fileID: 1104722313806245633, guid: 5ecd9106bcb6d62408ce26d0c816afd4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6956111423301803233, guid: 5ecd9106bcb6d62408ce26d0c816afd4, type: 3}
+      propertyPath: IsDebug
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6956111423301803233, guid: 5ecd9106bcb6d62408ce26d0c816afd4, type: 3}
       propertyPath: EnemyPrefab

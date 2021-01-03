@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
+    public bool IsDebug = false;
     public EnemyView EnemyPrefab;
     public EnemyView[] EnemiesPrefab;
     public Image GreenProgressBar;
@@ -17,6 +18,7 @@ public class Spawner : MonoBehaviour
     public float PauseBetweenWave { get; set; }
     public float SpawnInterval { get; set; }
     public List<GameObject> L_Enemy { get; set; }
+
 
 
 
@@ -66,13 +68,27 @@ public class Spawner : MonoBehaviour
         
         for(int i = 0; i< EnemyPerWave ; i++)
         {
-            var randomPoint = UnityEngine.Random.Range(0, L_SpawnPoints.Count);
-            var randomEnemy = UnityEngine.Random.Range(0, EnemiesPrefab.Length-2); // -2 boss
-            // if (x == L_SpawnPoints.Count) x = 0;
-            // var obj = Instantiate<EnemyView>(EnemyPrefab, L_SpawnPoints[randomPoint], Quaternion.identity);
-            var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], L_SpawnPoints[randomPoint], Quaternion.identity);
-            obj.Init();
-            GameController.singleton.L_Enemy.Add(obj);
+            if (!IsDebug)
+            { //Old spawner
+                var randomPoint = UnityEngine.Random.Range(0, L_SpawnPoints.Count);
+                var randomEnemy = UnityEngine.Random.Range(0, EnemiesPrefab.Length - 2); // -2 boss
+                var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], L_SpawnPoints[randomPoint], Quaternion.identity);
+                obj.Init();
+                GameController.singleton.L_Enemy.Add(obj);
+            }
+            else
+            {  //New spawner
+                var randomEnemy = UnityEngine.Random.Range(0, EnemiesPrefab.Length - 2); // -2 boss
+                var randomPoint = L_SpawnPoints[UnityEngine.Random.Range(0, L_SpawnPoints.Count)];
+                randomPoint.x += UnityEngine.Random.Range(-1, 1);
+                randomPoint.z += UnityEngine.Random.Range(-1, 1);
+                var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], randomPoint, Quaternion.identity);
+                obj.Init();
+                GameController.singleton.L_Enemy.Add(obj);
+            }
+
+
+            
             GreenProgressBar.fillAmount = i / EnemyPerWave; //(float) 
             yield return new WaitForSeconds(SpawnInterval);
         }

@@ -12,7 +12,50 @@ public class GameController : MonoBehaviour
     public TowerView tower;
     public Spawner spawner;
     public List<EnemyView> L_Enemy = new List<EnemyView>();
+    public SettingWave SettingWave = new SettingWave();
+    private GameDifficult gameDifficult = GameDifficult.Easy;
 
+    public GameDifficult GameDifficult
+    {
+        get => gameDifficult;
+        set
+        {
+            gameDifficult = value;
+            switch (gameDifficult)
+            {
+                case GameDifficult.Easy:
+                    SettingWave.EnemyHPCoeff = 0.5f;
+                    SettingWave.EnemyDamageCoeff = 0.5f;
+                    SettingWave.RewardCoeff = 0.25f;
+                    SettingWave.BossInWaves = 25;
+                    break;
+                case GameDifficult.Normal:
+                    SettingWave.EnemyHPCoeff = 1f;
+                    SettingWave.EnemyDamageCoeff = 1f;
+                    SettingWave.RewardCoeff = 1f;
+                    SettingWave.BossInWaves = 10;
+                    break;
+                case GameDifficult.Medium:
+                    SettingWave.EnemyHPCoeff = 2f;
+                    SettingWave.EnemyDamageCoeff = 2f;
+                    SettingWave.RewardCoeff = 4f;
+                    SettingWave.BossInWaves = 5;
+                    break;
+                case GameDifficult.Hard:
+                    SettingWave.EnemyHPCoeff = 6f;
+                    SettingWave.EnemyDamageCoeff = 6f;
+                    SettingWave.RewardCoeff = 8f;
+                    SettingWave.BossInWaves = 2;
+                    break;
+                case GameDifficult.VeryHard:
+                    SettingWave.EnemyHPCoeff = 10f;
+                    SettingWave.EnemyDamageCoeff = 10f;
+                    SettingWave.RewardCoeff = 12f;
+                    SettingWave.BossInWaves = 1;
+                    break;
+            }
+        }
+    }
 
     //Временное
     public float SpawnInterval;
@@ -30,6 +73,9 @@ public class GameController : MonoBehaviour
             DontDestroyOnLoad(this);
         }
         else Destroy(gameObject);
+
+        //TODO: это установить с настроек меню
+        GameDifficult = GameDifficult.Normal;
     }
 
 
@@ -99,4 +145,21 @@ public enum GameState
     MainMenu,
     Game,
     Pause
+}
+
+public enum GameDifficult
+{
+    Easy = 0,
+    Normal,
+    Medium,
+    Hard,
+    VeryHard
+}
+
+public class SettingWave
+{
+    public float EnemyHPCoeff;
+    public float EnemyDamageCoeff;
+    public float RewardCoeff;
+    public int BossInWaves;
 }

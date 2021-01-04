@@ -28,37 +28,37 @@ public class TowerView : MonoBehaviour
             timeCalculate -= Time.deltaTime;
             if (timeCalculate <= 0) //Tower logic
             {
-                timeCalculate = tower.AttackSpeed;
-                var count = L_Enemy.Count;
+                EnemyView closets = null;
+                // уберем пустые нулевые (правда откуда они?)
+                int count = L_Enemy.Count - 1;
+                for (int i = count; i >= 0; i--)
+                {
+                    if (L_Enemy[i] == null) 
+                        L_Enemy.RemoveAt(i);
+                }
+
+                count = L_Enemy.Count;
                 if (count > 0)
                 {
-                    var closets = L_Enemy[0];
-                    if (count > 1)
+                    float closetsDistance = float.MaxValue;
+                    float currentDistance = closetsDistance;
+                    for (int i = 0; i < count; i++)
                     {
-                        for (int i = 1; i < L_Enemy.Count; i++)
+                        // дистанция до текущего врага
+                        currentDistance = Vector3.Distance(transform.position, L_Enemy[i].transform.position);
+                        if (currentDistance < closetsDistance)
                         {
-                            if (L_Enemy[i] != null)
-                            {
-                                if (closets != null)
-                                {
-                                    if (Vector3.Distance(transform.position, L_Enemy[i].transform.position) <
-                                        Vector3.Distance(closets.transform.position, transform.position))
-                                        closets = L_Enemy[i];
-                                }
-                                else closets = L_Enemy[i];
-                            }
-                            else
-                            {
-                                L_Enemy.RemoveAt(i);
-                                i--;
-                            }
-
+                            closets = L_Enemy[i];
+                            // наименьшая дистанция
+                            closetsDistance = currentDistance;
                         }
                     }
-                    var distance = Vector3.Distance(closets.gameObject.transform.position, transform.position);
-                    if (distance < tower.AttackRange)
+
+                    if (closetsDistance < tower.AttackRange)
                     {
                         closets.TakeDamage(tower.Damage);
+                        // атака у нас производится тут. поэтому и сброс таймера тоже тут
+                        timeCalculate = tower.AttackSpeed;
                     }
                 }
             } //Tower logic end

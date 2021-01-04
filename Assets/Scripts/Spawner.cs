@@ -6,7 +6,7 @@ public class Spawner : MonoBehaviour
 {
     public bool IsNewSpawner = false;
     public EnemyView[] EnemiesPrefab;
-
+    public Transform parentPoints; 
 
     
 
@@ -47,10 +47,10 @@ public class Spawner : MonoBehaviour
     {
         CurrentWave = 0;
         L_Enemy = new List<GameObject>();
-        GameObject[] points = GameObject.FindGameObjectsWithTag("SpawnPoint");
-        for (int i = 0; i < points.Length - 1; i++)
+        int child = parentPoints.childCount;
+        for (int i = 0; i < child; i++)
         {
-            L_SpawnPoints.Add(points[i].transform.position);
+            L_SpawnPoints.Add(parentPoints.GetChild(i).position);
         }
         CanTime = true;
 

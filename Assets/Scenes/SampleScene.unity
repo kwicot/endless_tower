@@ -134,6 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &94309724 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8064546645807881024, guid: 1e99877401a36084fb5543175c084a84, type: 3}
+  m_PrefabInstance: {fileID: 2901940355345550016}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &284973517 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3247491247829172907, guid: b5d2936a69a83054dbb39779bd7bfdec, type: 3}
@@ -861,6 +866,10 @@ PrefabInstance:
       propertyPath: EnemyPrefab
       value: 
       objectReference: {fileID: 8641331403953697411, guid: 133b35213373dbf43bff95c808d0e4dc, type: 3}
+    - target: {fileID: 6956111423301803233, guid: 5ecd9106bcb6d62408ce26d0c816afd4, type: 3}
+      propertyPath: parentPoints
+      value: 
+      objectReference: {fileID: 94309724}
     - target: {fileID: 6956111423301803233, guid: 5ecd9106bcb6d62408ce26d0c816afd4, type: 3}
       propertyPath: RedProgressBar
       value: 

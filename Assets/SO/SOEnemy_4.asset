@@ -15,4 +15,4 @@ MonoBehaviour:
   HP: 20
   Speed: 1
   Damage: 20
-  Type: 0
+  Type: 3

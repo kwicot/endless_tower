@@ -90,7 +90,7 @@ public class GameController : MonoBehaviour
     }
 
 
-    public void StartGame(int level)
+    public void LoadLevel(int level)
     {
         SceneManager.LoadScene(level);
     }

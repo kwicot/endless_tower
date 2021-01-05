@@ -144,7 +144,7 @@ public class Spawner : MonoBehaviour
 
 
             
-            Debug.Log("Green progress bar fill= " + i / EnemyPerWave);
+            //Debug.Log("Green progress bar fill= " + i / EnemyPerWave);
             yield return new WaitForSeconds(SpawnInterval);
         }
 

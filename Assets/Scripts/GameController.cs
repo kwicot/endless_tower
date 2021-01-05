@@ -15,6 +15,17 @@ public class GameController : MonoBehaviour
     public SettingWave SettingWave = new SettingWave();
     private GameDifficult gameDifficult = GameDifficult.Easy;
 
+    public Dictionary<string, float> GameMoney = new Dictionary<string, float>()
+    {
+        {"White",0 },
+        {"Orange",100 },
+        {"Red",0 },
+        {"Green",0 },
+        {"Blue", 0 },
+        {"Crystal", 0 }
+    };
+        
+
     public GameDifficult GameDifficult
     {
         get => gameDifficult;
@@ -123,7 +134,7 @@ public class GameController : MonoBehaviour
         }
     }
     
-    public void EnemyKilled(Dictionary<int,int> reward)
+    public void EnemyKilled(EnemyType type)
     {
         for(int i = 0; i< L_Enemy.Count; i++) //Очистка листа от пустых ссылок
         {
@@ -134,7 +145,42 @@ public class GameController : MonoBehaviour
             }
         }
         if (L_Enemy.Count == 0) spawner.CanTime = true;
+
+        //switch (type)
+        //{
+        //    case EnemyType.Default: AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff); break;
+        //    case EnemyType.Fast:
+        //        {
+        //            AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
+        //            AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
+        //        } break;
+        //    case EnemyType.Fat:
+        //        {
+        //            AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
+        //            AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
+        //        }
+        //        break;
+        //    case EnemyType.MiniBoss:
+        //        {
+        //            AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
+        //            AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
+        //        }
+        //        break;
+        //    case EnemyType.Boss:
+        //        {
+        //            AddReward("Crystal", EnemyRewardCrystal * CrystalBonusPerKill);
+        //            AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
+        //            AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
+        //        }
+        //        break;
+
+        //}
         //Вознаграждение
+    }
+
+    void AddReward(string Name, float Count)
+    {
+        GameMoney[Name] += Count;
     }
     
     
@@ -155,7 +201,6 @@ public enum GameDifficult
     Hard,
     VeryHard
 }
-
 public class SettingWave
 {
     public float EnemyHPCoeff;

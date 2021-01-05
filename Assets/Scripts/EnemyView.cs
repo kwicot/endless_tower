@@ -23,9 +23,10 @@ public class EnemyView : MonoBehaviour
     {
         enemy = new Enemy
         {
-            HP = SOEnemy.HP, 
-            Damage = SOEnemy.Damage, 
-            Speed = SOEnemy.Speed
+            HP = SOEnemy.HP * GameController.singleton.SettingWave.EnemyHPCoeff,
+            Damage = SOEnemy.Damage * GameController.singleton.SettingWave.EnemyDamageCoeff,
+            Speed = SOEnemy.Speed,
+            Type = SOEnemy.Type,
         };
     }
 
@@ -47,7 +48,7 @@ public class EnemyView : MonoBehaviour
         if(enemy.HP <= 0)
         {
             Destroy(gameObject);
-            GameController.singleton.EnemyKilled(enemy.Loot);
+            GameController.singleton.EnemyKilled(enemy.Type);
         }
         Debug.Log("Enemy HP= " + enemy.HP);
     }

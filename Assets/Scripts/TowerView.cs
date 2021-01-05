@@ -70,7 +70,7 @@ public class TowerView : MonoBehaviour
     {
         tower.HP -= damage;
         
-        Debug.Log($"tower HP={tower.HP}");
+        //Debug.Log($"tower HP={tower.HP}");
 
         if (tower.HP <= 0f)
         {

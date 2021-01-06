@@ -43,6 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29bfbc400bc958f4ea67a27c93f98835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tower: {fileID: 0}
+  spawner: {fileID: 0}
+  factory: {fileID: 0}
+  L_Enemy: []
   SpawnInterval: 1
   WaveInterval: 3
   EnemyPerWave: 10
+  GameState: 1

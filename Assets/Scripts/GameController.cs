@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
 
     public TowerView tower;
     public Spawner spawner;
+    public FactoryScript factory;
     public List<EnemyView> L_Enemy = new List<EnemyView>();
     public SettingWave SettingWave = new SettingWave();
     private GameDifficult gameDifficult = GameDifficult.Easy;
@@ -85,14 +86,29 @@ public class GameController : MonoBehaviour
         }
         else Destroy(gameObject);
 
+
         //TODO: это установить с настроек меню
         GameDifficult = GameDifficult.Normal;
     }
 
 
-    public void LoadLevel(int level)
+    public void LoadLevel(int index)
     {
-        SceneManager.LoadScene(level);
+        int currentLevel = SceneManager.GetActiveScene().buildIndex;
+        if (currentLevel == 0)
+        {
+            factory.SaveData();
+            SceneManager.LoadScene(index);
+        }
+        else if (index == 0)
+        {
+            SceneManager.LoadScene(index);
+            factory.LoadData();
+        }
+        else
+        {
+            SceneManager.LoadScene(index);
+        }
     }
 
     public GameState GameState = GameState.Game;

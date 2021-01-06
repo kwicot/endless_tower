@@ -19,9 +19,8 @@ public class TowerView : MonoBehaviour
             tower.HP += tower.Regeneration * Time.deltaTime;
             if (tower.HP > tower.HPMax) tower.HP = tower.HPMax;
         }
-        AttackUpdate();
     }
-    void AttackUpdate()
+    public void AttackUpdate()
     {
         if (GameController.singleton.GameState == GameState.Game)
         {
@@ -31,11 +30,11 @@ public class TowerView : MonoBehaviour
                 EnemyView closets = null;
                 // уберем пустые нулевые (правда откуда они?)
                 int count = L_Enemy.Count - 1;
-                for (int i = count; i >= 0; i--)
-                {
-                    if (L_Enemy[i] == null) 
-                        L_Enemy.RemoveAt(i);
-                }
+                // for (int i = count; i >= 0; i--)
+                // {
+                //     if (L_Enemy[i] == null) 
+                //         L_Enemy.RemoveAt(i);
+                // }
 
                 count = L_Enemy.Count;
                 if (count > 0)
@@ -78,11 +77,11 @@ public class TowerView : MonoBehaviour
         }
     }
     
-    void OnDrawGizmos()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 2);
-    }
+    // void OnDrawGizmos()
+    // {
+    //     // Draw a yellow sphere at the transform's position
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawWireSphere(transform.position, 2);
+    // }
     
 }

@@ -31,12 +31,12 @@ public class EnemyView : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Move()
     {
         if (target != null)
         {
-            //if (Time.timeScale <= 0.1f) return;
-            //transform.position = Vector3.MoveTowards(transform.position, target.position, 0.01f * enemy.Speed * Time.timeScale);
+            if (Time.timeScale <= 0.1f) return;
+            
             Vector3 dir = (target.position - transform.position).normalized;
             dir.y = 0;
             Rb.velocity = dir * enemy.Speed * 2;
@@ -47,8 +47,8 @@ public class EnemyView : MonoBehaviour
         enemy.HP -= damage;
         if(enemy.HP <= 0)
         {
+            GameController.singleton.EnemyKilled(this);
             Destroy(gameObject);
-            GameController.singleton.EnemyKilled(enemy.Type);
         }
         Debug.Log("Enemy HP= " + enemy.HP);
     }

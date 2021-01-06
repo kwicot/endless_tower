@@ -123,16 +123,16 @@ public class Spawner : MonoBehaviour
         
         for(int i = 0; i< EnemyPerWave ; i++)
         {
-            if (!IsNewSpawner)
-            { //Old spawner
-                var randomPoint = UnityEngine.Random.Range(0, L_SpawnPoints.Count);
-                var randomEnemy = UnityEngine.Random.Range(0, EnemiesPrefab.Length - 2); // -2 boss
-                var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], L_SpawnPoints[randomPoint], Quaternion.identity);
-                obj.Init();
-                GameController.singleton.L_Enemy.Add(obj);
-            }
-            else
-            {  //New spawner
+            // if (!IsNewSpawner)
+            // { //Old spawner
+            //     var randomPoint = UnityEngine.Random.Range(0, L_SpawnPoints.Count);
+            //     var randomEnemy = UnityEngine.Random.Range(0, EnemiesPrefab.Length - 2); // -2 boss
+            //     var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], L_SpawnPoints[randomPoint], Quaternion.identity);
+            //     obj.Init();
+            //     GameController.singleton.L_Enemy.Add(obj);
+            // }
+            // else
+            // {  //New spawner
                 var randomEnemy = _enemyList.Count == 1 ? _enemyList[0] : Utils.GetRandomOnWeight(weight);
                 var randomPoint = L_SpawnPoints[UnityEngine.Random.Range(0, L_SpawnPoints.Count)];
                 randomPoint.x += UnityEngine.Random.Range(-1, 1);
@@ -140,7 +140,7 @@ public class Spawner : MonoBehaviour
                 var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], randomPoint, Quaternion.identity);
                 obj.Init();
                 GameController.singleton.L_Enemy.Add(obj);
-            }
+            // }
 
 
             

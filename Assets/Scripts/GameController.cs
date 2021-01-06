@@ -99,13 +99,36 @@ public class GameController : MonoBehaviour
     private float timeCalculate = 0.1f;
     private void Update()
     {
-        EnemyDistanceUpdate();
+        if (GameState == GameState.Game)
+        {
+            // двигаем мобов
+            EnemyMove();
+            
+            // стрельба башни
+            tower?.AttackUpdate();
+            
+            // перерасчет дистанции для нанесения урона башне
+            EnemyDistanceUpdate();
+        }
+    }
+
+    void EnemyMove()
+    {
+        int count = L_Enemy.Count;
+        for (int i = count - 1; i >= 0; i--)
+        {
+            // if (L_Enemy[i] == null)
+            // {
+            //     L_Enemy.RemoveAt(i);
+            //     continue;
+            // }
+
+            L_Enemy[i]?.Move();
+        }
     }
 
     void EnemyDistanceUpdate()
     {
-        if (GameState == GameState.Game)
-        {
             timeCalculate -= Time.deltaTime;
             if (timeCalculate <= 0f) //Enemy logic
             {
@@ -129,21 +152,21 @@ public class GameController : MonoBehaviour
                     }
                 }
             } //Enemy logic end
-
-            
-        }
     }
     
-    public void EnemyKilled(EnemyType type)
+    public void EnemyKilled(EnemyView enemy)
     {
-        for(int i = 0; i< L_Enemy.Count; i++) //Очистка листа от пустых ссылок
-        {
-            if(L_Enemy[i] == null)
-            {
-                L_Enemy.RemoveAt(i);
-                i--;
-            }
-        }
+        EnemyType type = enemy.SOEnemy.Type;
+        L_Enemy.Remove(enemy);
+        
+        // for(int i = 0; i< L_Enemy.Count; i++) //Очистка листа от пустых ссылок
+        // {
+        //     if(L_Enemy[i] == null)
+        //     {
+        //         L_Enemy.RemoveAt(i);
+        //         i--;
+        //     }
+        // }
         if (L_Enemy.Count == 0) spawner.CanTime = true;
 
         //switch (type)

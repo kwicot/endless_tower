@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FactoryScript : MonoBehaviour
 {
-    public float OrangeTimeLeft;
     public float OrangeTimeMax;
-    public float OrangeReward;
+    public int OrangeReward;
+    FactoryTimer OrangeTimer;
+    public Image OrangeProgressBar;
+    public Text OrangeText;
 
     float RedTimeLeft;
     float RedTimeMax;
@@ -22,63 +25,35 @@ public class FactoryScript : MonoBehaviour
     void Start()
     {
         GameController.singleton.factory = this;
+        OrangeTimer = new FactoryTimer() { Seconds = OrangeTimeMax, Resource = "Orange", Reward = OrangeReward };
     }
 
     void Update()
     {
-        if(OrangeTimeMax > 0)
+        if (OrangeProgressBar.IsActive())
         {
-            OrangeTimeLeft -= Time.deltaTime;
-            //Debug.Log("Time left= " + (OrangeTimeLeft / 3600).ToString()+ " Hours" + (OrangeTimeLeft  % 3600) 
-            if(OrangeTimeLeft <= 0)
-            {
-                AddReward("Orange", OrangeReward);
-                OrangeTimeLeft = OrangeTimeMax;
-                Debug.Log("Reward-" + GameController.singleton.GameMoney["Orange"]);
-            }
+            OrangeProgressBar.fillAmount = OrangeTimer.Seconds / OrangeTimeMax;
+            OrangeText.text = OrangeTimer.GetTimeLeft();
         }
-        if (RedTimeMax > 0)
+        if (OrangeTimer.Tick(Time.deltaTime))
         {
-            RedTimeLeft -= Time.deltaTime;
-            if (RedTimeLeft <= 0)
-            {
-                AddReward("Red", RedReward);
-                RedTimeLeft = RedTimeMax;
-            }
+            AddReward("Orange", OrangeReward);
+            OrangeTimer.Seconds = OrangeTimeMax;
+            Debug.Log("Reward- " + GameController.singleton.GameMoney["Orange"]);
         }
-        if (BlueTimeMax > 0)
-        {
-            BlueTimeLeft -= Time.deltaTime;
-            if (BlueTimeLeft <= 0)
-            {
-                AddReward("Blue", BlueReward);
-                BlueTimeLeft = BlueTimeMax;
-            }
-        }
-        if (GreenTimeMax > 0)
-        {
-            GreenTimeLeft -= Time.deltaTime;
-            if (GreenTimeLeft <= 0)
-            {
-                AddReward("Green", GreenReward);
-                GreenTimeLeft = GreenTimeMax;
-            }
-        }
+        Debug.Log(OrangeTimer.GetTimeLeft());
+        
+    }
+    public void OrangeUpdateTime()
+    {
+        OrangeTimeMax /= 2;
+        OrangeTimer.Seconds /= 2;
     }
     void AddReward(string Name, float count)
     {
         GameController.singleton.GameMoney[Name] += count;
     }
-    public void Upgrade(string Name)
-    {
-        switch (Name)
-        {
-            case "Orange":
-                {
 
-                }break;
-        }
-    }
     public void SaveData()
     {
 
@@ -89,4 +64,29 @@ public class FactoryScript : MonoBehaviour
     }
 
 
+}
+[System.Serializable]
+public class FactoryTimer
+{
+    public string Resource;
+    public float Seconds;
+    public int Reward;
+
+    int min => (int)Seconds / 60;
+    int Hour => min / 60;
+    int Minnutes => min - Hour * 60;
+    int Sec => (int)Seconds - min * 60;
+
+    public bool Tick(float count)
+    {
+        Seconds -= count;
+        if (Seconds <= 0)
+            return true;
+        else return false;
+    }
+    public string GetTimeLeft()
+    {
+        string res = "H-" + Hour.ToString() + " M-" + Minnutes.ToString() + " S-" + Sec.ToString();
+        return res;
+    }
 }

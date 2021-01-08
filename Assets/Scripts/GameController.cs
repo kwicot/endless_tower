@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Model;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -91,6 +89,47 @@ public class GameController : MonoBehaviour
         GameDifficult = GameDifficult.Medium;
     }
 
+    /// <summary>
+    /// Обмен ресурсов ()
+    /// </summary>
+    /// <param name="resIn">что тратим</param>
+    /// <param name="AmountOut">прибавка меняемого элемента</param>
+    /// <param name="resOut">на что меняем</param>
+    /// <param name="withChange">false - просто проверить на возможность обмена</param>
+    public bool ChangeResources(string resIn, int AmountOut, string resOut, bool withChange = true)
+    {
+        if (resIn == "Orange")
+        {
+            int amount = 0;
+            switch (resOut)
+            {
+                case "Red":
+                    amount = AmountOut * 50; // TODO: коэфициенты возможно будут меняться при улучшениях?
+                    break;
+                case "Green":
+                    amount = AmountOut * 200;
+                    break;
+                case "Blue":
+                    amount = AmountOut * 1000;
+                    break;
+            }
+            
+            
+            if (GameMoney["Orange"] > amount)
+            {
+                if (withChange)
+                {
+                    GameMoney["Orange"] -= amount;
+                    GameMoney[resOut] += AmountOut;
+                }
+
+                return true;
+            }
+        }
+        
+        
+        return false;
+    }
 
     public void LoadLevel(int index)
     {

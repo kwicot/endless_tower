@@ -50,10 +50,22 @@ public class FabricTimer : MonoBehaviour
     void OnTick()
     {
         _factoryTimer.Seconds--;
+
+        if (GameController.singleton.GameState == GameState.MainMenu)
+        {
+            //TODO: переделать на состояние игры а не "iProgress != null"
+        }
+        else if (GameController.singleton.GameState == GameState.Game)
+        {
+            //
+        }
+
         if (_factoryTimer.Seconds > 0)
         {
-            iProgress.fillAmount = _factoryTimer.Seconds / _factoryTimer.MaxSeconds;
-            txTime.text = _factoryTimer.GetTimeLeft();
+            if (iProgress != null)
+                iProgress.fillAmount = _factoryTimer.Seconds / _factoryTimer.MaxSeconds;
+            if (txTime != null)
+                txTime.text = _factoryTimer.GetTimeLeft();
         }
         else
         {
@@ -71,6 +83,8 @@ public class FabricTimer : MonoBehaviour
 
     private void OnDestroy()
     {
+        // почемуто сюда не заходит :(
+        
         Utilities.Timer.OnTick -= OnTick;
         btnUpdate.onClick.RemoveAllListeners();
     }

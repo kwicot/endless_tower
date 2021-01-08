@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,7 @@ public class FactoryScript : MonoBehaviour
             Resource = "Orange", 
             Reward = OrangeReward
         };
+        OrangeTimer.Init();
         
         RedTimer = new FactoryTimer()
         {
@@ -35,6 +37,7 @@ public class FactoryScript : MonoBehaviour
             Resource = "Red", 
             Reward = OrangeReward
         };
+        RedTimer.Init();
         
         BlueTimer = new FactoryTimer()
         {
@@ -43,6 +46,7 @@ public class FactoryScript : MonoBehaviour
             Resource = "Blue", 
             Reward = OrangeReward
         };
+        BlueTimer.Init();
         
         GreenTimer = new FactoryTimer()
         {
@@ -51,6 +55,7 @@ public class FactoryScript : MonoBehaviour
             Resource = "Green", 
             Reward = OrangeReward
         };
+        GreenTimer.Init();
         
         // create prefab
         if (HasPrefab("FabricTimer"))
@@ -70,13 +75,11 @@ public class FactoryScript : MonoBehaviour
             ft = element.GetComponent<FabricTimer>();
             if (ft) ft.Init(BlueTimer);
             
-            // dark
+            // green
             element = Instantiate(GetPrefab("FabricTimer"), pnTimer);
             ft = element.GetComponent<FabricTimer>();
             if (ft) ft.Init(GreenTimer);
         }
-
-        // init facbric timer
     }
 
     
@@ -125,6 +128,8 @@ public class FactoryScript : MonoBehaviour
         return null;
     }
 }
+
+
 [System.Serializable]
 public class FactoryTimer
 {
@@ -132,18 +137,48 @@ public class FactoryTimer
     public float Seconds;
     public float MaxSeconds;
     public int Reward;
+    [NonSerialized] public System.Action ActionTick = null;
 
     int min => (int)Seconds / 60;
     int Hour => min / 60;
     int Minnutes => min - Hour * 60;
     int Sec => (int)Seconds - min * 60;
 
-    public bool Tick(float count)
+    public void Init()
     {
-        Seconds -= count;
-        if (Seconds <= 0)
-            return true;
-        else return false;
+        Utilities.Timer.OnTick -= OnTick;
+        Utilities.Timer.OnTick += OnTick;
+    }
+
+    void OnTick()
+    {
+        Seconds--;
+
+        if (GameController.singleton.GameState == GameState.MainMenu)
+        {
+            //TODO: переделать на состояние игры а не "iProgress != null"
+        }
+        else if (GameController.singleton.GameState == GameState.Game)
+        {
+            //
+        }
+
+        if (Seconds > 0)
+        {
+            ActionTick?.Invoke();
+        }
+        else
+        {
+            Restart();
+        }
+    }
+
+    void Restart()
+    {
+        FactoryScript.AddReward(Resource, Reward);
+        Seconds = MaxSeconds;
+        
+        Debug.Log("Reward- " + GameController.singleton.GameMoney[Resource]);
     }
     
     public void UpdateMaxTime()

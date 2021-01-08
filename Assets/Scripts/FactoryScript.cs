@@ -8,48 +8,84 @@ public class FactoryScript : MonoBehaviour
     public float OrangeTimeMax;
     public int OrangeReward;
     FactoryTimer OrangeTimer;
-    public Image OrangeProgressBar;
-    public Text OrangeText;
+    FactoryTimer RedTimer;
+    FactoryTimer BlueTimer;
+    FactoryTimer GreenTimer;
 
-    float RedTimeLeft;
-    float RedTimeMax;
-    float RedReward;
-
-    float BlueTimeLeft;
-    float BlueTimeMax;
-    float BlueReward;
-
-    float GreenTimeLeft;
-    float GreenTimeMax;
-    float GreenReward;
+    //
+    public Transform pnTimer;
+    public GameObject[] prefabs;
+    
     void Start()
     {
         GameController.singleton.factory = this;
-        OrangeTimer = new FactoryTimer() { Seconds = OrangeTimeMax, Resource = "Orange", Reward = OrangeReward };
+        
+        OrangeTimer = new FactoryTimer()
+        {
+            Seconds = OrangeTimeMax, 
+            MaxSeconds = OrangeTimeMax, 
+            Resource = "Orange", 
+            Reward = OrangeReward
+        };
+        
+        RedTimer = new FactoryTimer()
+        {
+            Seconds = OrangeTimeMax, 
+            MaxSeconds = OrangeTimeMax, 
+            Resource = "Red", 
+            Reward = OrangeReward
+        };
+        
+        BlueTimer = new FactoryTimer()
+        {
+            Seconds = OrangeTimeMax, 
+            MaxSeconds = OrangeTimeMax, 
+            Resource = "Blue", 
+            Reward = OrangeReward
+        };
+        
+        GreenTimer = new FactoryTimer()
+        {
+            Seconds = OrangeTimeMax, 
+            MaxSeconds = OrangeTimeMax, 
+            Resource = "Green", 
+            Reward = OrangeReward
+        };
+        
+        // create prefab
+        if (HasPrefab("FabricTimer"))
+        {
+            // orange
+            var element = Instantiate(GetPrefab("FabricTimer"), pnTimer);
+            var ft = element.GetComponent<FabricTimer>();
+            if (ft) ft.Init(OrangeTimer);
+            
+            // red
+            element = Instantiate(GetPrefab("FabricTimer"), pnTimer);
+            ft = element.GetComponent<FabricTimer>();
+            if (ft) ft.Init(RedTimer);
+            
+            // blue
+            element = Instantiate(GetPrefab("FabricTimer"), pnTimer);
+            ft = element.GetComponent<FabricTimer>();
+            if (ft) ft.Init(BlueTimer);
+            
+            // dark
+            element = Instantiate(GetPrefab("FabricTimer"), pnTimer);
+            ft = element.GetComponent<FabricTimer>();
+            if (ft) ft.Init(GreenTimer);
+        }
+
+        // init facbric timer
     }
 
-    void Update()
-    {
-        if (OrangeProgressBar.IsActive())
-        {
-            OrangeProgressBar.fillAmount = OrangeTimer.Seconds / OrangeTimeMax;
-            OrangeText.text = OrangeTimer.GetTimeLeft();
-        }
-        if (OrangeTimer.Tick(Time.deltaTime))
-        {
-            AddReward("Orange", OrangeReward);
-            OrangeTimer.Seconds = OrangeTimeMax;
-            Debug.Log("Reward- " + GameController.singleton.GameMoney["Orange"]);
-        }
-        Debug.Log(OrangeTimer.GetTimeLeft());
-        
-    }
+    
     public void OrangeUpdateTime()
     {
         OrangeTimeMax /= 2;
         OrangeTimer.Seconds /= 2;
     }
-    void AddReward(string Name, float count)
+    public static void AddReward(string Name, float count)
     {
         GameController.singleton.GameMoney[Name] += count;
     }
@@ -64,12 +100,37 @@ public class FactoryScript : MonoBehaviour
     }
 
 
+    bool HasPrefab(string nameElement)
+    {
+        if (prefabs != null)
+            foreach (var p in prefabs)
+            {
+                if (p == null) continue;
+                if (p.name == nameElement)
+                    return true;
+            }
+
+        return false;
+    }
+    GameObject GetPrefab(string nameElement)
+    {
+        if (prefabs != null)
+            foreach (var p in prefabs)
+            {
+                if (p == null) continue;
+                if (p.name == nameElement)
+                    return p;
+            }
+
+        return null;
+    }
 }
 [System.Serializable]
 public class FactoryTimer
 {
     public string Resource;
     public float Seconds;
+    public float MaxSeconds;
     public int Reward;
 
     int min => (int)Seconds / 60;
@@ -84,6 +145,14 @@ public class FactoryTimer
             return true;
         else return false;
     }
+    
+    public void UpdateMaxTime()
+    {
+        MaxSeconds /= 2;
+        Seconds /= 2;
+    }
+    
+    
     public string GetTimeLeft()
     {
         string res = "H-" + Hour.ToString() + " M-" + Minnutes.ToString() + " S-" + Sec.ToString();

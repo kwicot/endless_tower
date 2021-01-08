@@ -11,15 +11,15 @@ public class Spawner : MonoBehaviour
     public EnemyView[] EnemiesPrefab;
     public Transform parentPoints;
     private List<int> _enemyList = new List<int>();
-    
+    private GameController GC => GameController.singleton;
 
 
-    public int EnemyPerWave { get; set; }
+    public int EnemyPerWave => GC.EnemyPerWave;
     public int BossWave { get; set; }
     public int CurrentWave { get; private set; }
-    public float PauseBetweenWave { get; set; }
-    public float SpawnInterval { get; set; }
-    public List<GameObject> L_Enemy { get; set; }
+    public float PauseBetweenWave => GC.WaveInterval;
+    public float SpawnInterval => GC.SpawnInterval;
+    public List<GameObject> L_Enemy = new List<GameObject>();
 
 
     private Dictionary<int, int> weight = new Dictionary<int, int>();
@@ -32,35 +32,34 @@ public class Spawner : MonoBehaviour
 
     void Start()
     {
-        GameController.singleton.spawner = this;
+        GC.spawner = this;
         Init();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
         if (CanTime)
         {
             Timer += Time.deltaTime;
             if (Timer > PauseBetweenWave) StartCoroutine(NewWave());
         }
     }
+    
     void Init()
     {
         CurrentWave = 0;
-        L_Enemy = new List<GameObject>();
+        L_Enemy.Clear();
+        L_SpawnPoints.Clear();
         int child = parentPoints.childCount;
         for (int i = 0; i < child; i++)
         {
+            // на самом деле можно брать непосредственно из parentPoints.GetChild
             L_SpawnPoints.Add(parentPoints.GetChild(i).position);
         }
         CanTime = true;
 
 
-        EnemyPerWave = GameController.singleton.EnemyPerWave;
-        PauseBetweenWave = GameController.singleton.WaveInterval;
-        SpawnInterval = GameController.singleton.SpawnInterval;
         
         // Генерируем список врагов и веса
         // веса
@@ -134,12 +133,10 @@ public class Spawner : MonoBehaviour
             // else
             // {  //New spawner
                 var randomEnemy = _enemyList.Count == 1 ? _enemyList[0] : Utils.GetRandomOnWeight(weight);
-                var randomPoint = L_SpawnPoints[UnityEngine.Random.Range(0, L_SpawnPoints.Count)];
-                randomPoint.x += UnityEngine.Random.Range(-1, 1);
-                randomPoint.z += UnityEngine.Random.Range(-1, 1);
+                var randomPoint = GetRandomPoint();
                 var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], randomPoint, Quaternion.identity);
                 obj.Init();
-                GameController.singleton.L_Enemy.Add(obj);
+                GC.L_Enemy.Add(obj);
             // }
 
 
@@ -148,7 +145,29 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(SpawnInterval);
         }
 
+        // boss
+        if (CurrentWave % GC.SettingWave.BossInWaves == 0)
+        {
+            var randomPoint = GetRandomPoint();
+            var obj = Instantiate<EnemyView>(EnemiesPrefab[_enemyList.Count - 1], randomPoint, Quaternion.identity);
+            obj.Init();
+            GC.L_Enemy.Add(obj);
+        }
     }
+
+    /// <summary>
+    /// получить рандомную точку из списка возможных
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 GetRandomPoint()
+    {
+        var randomPoint = L_SpawnPoints[UnityEngine.Random.Range(0, L_SpawnPoints.Count)];
+        randomPoint.x += UnityEngine.Random.Range(-1, 1);
+        randomPoint.z += UnityEngine.Random.Range(-1, 1);
+
+        return randomPoint;
+    }
+
     public void SkipWave()
     {
         StartCoroutine(NewWave());

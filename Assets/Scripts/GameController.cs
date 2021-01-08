@@ -88,7 +88,7 @@ public class GameController : MonoBehaviour
 
 
         //TODO: это установить с настроек меню
-        GameDifficult = GameDifficult.Normal;
+        GameDifficult = GameDifficult.Medium;
     }
 
 
@@ -133,12 +133,6 @@ public class GameController : MonoBehaviour
         int count = L_Enemy.Count;
         for (int i = count - 1; i >= 0; i--)
         {
-            // if (L_Enemy[i] == null)
-            // {
-            //     L_Enemy.RemoveAt(i);
-            //     continue;
-            // }
-
             L_Enemy[i]?.Move();
         }
     }
@@ -174,15 +168,6 @@ public class GameController : MonoBehaviour
     {
         EnemyType type = enemy.SOEnemy.Type;
         L_Enemy.Remove(enemy);
-        
-        // for(int i = 0; i< L_Enemy.Count; i++) //Очистка листа от пустых ссылок
-        // {
-        //     if(L_Enemy[i] == null)
-        //     {
-        //         L_Enemy.RemoveAt(i);
-        //         i--;
-        //     }
-        // }
         if (L_Enemy.Count == 0) spawner.CanTime = true;
 
         //switch (type)

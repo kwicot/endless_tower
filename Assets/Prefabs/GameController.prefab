@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3430937361562283868}
   - component: {fileID: 3430937361562283869}
+  - component: {fileID: 314706817}
+  - component: {fileID: 5290001472571675294}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -47,7 +49,36 @@ MonoBehaviour:
   spawner: {fileID: 0}
   factory: {fileID: 0}
   L_Enemy: []
-  SpawnInterval: 1
+  SpawnInterval: 0.1
   WaveInterval: 3
-  EnemyPerWave: 10
+  EnemyPerWave: 50
   GameState: 1
+--- !u!114 &314706817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3430937361562283870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666fb5beb202a8b47b85377618403658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OrangeTimeMax: 86400
+  OrangeReward: 100
+  pnTimer: {fileID: 0}
+  prefabs:
+  - {fileID: 780356549135660256, guid: fc5bc0dca9d480f4c8500174eb7b3f17, type: 3}
+--- !u!114 &5290001472571675294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3430937361562283870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f27d6adfbd2fb949943a184bb7f919c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

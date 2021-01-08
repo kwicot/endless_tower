@@ -21,6 +21,8 @@ public class FactoryScript : MonoBehaviour
     {
         GameController.singleton.factory = this;
         
+        //TODO: тут думаю нужно будет взять из сохранки данные таймеров
+        
         OrangeTimer = new FactoryTimer()
         {
             Seconds = OrangeTimeMax, 
@@ -57,6 +59,8 @@ public class FactoryScript : MonoBehaviour
         };
         GreenTimer.Init();
         
+        
+        // TODO: перенести в открытие окна 
         // create prefab
         if (HasPrefab("FabricTimer"))
         {
@@ -81,13 +85,7 @@ public class FactoryScript : MonoBehaviour
             if (ft) ft.Init(GreenTimer);
         }
     }
-
     
-    public void OrangeUpdateTime()
-    {
-        OrangeTimeMax /= 2;
-        OrangeTimer.Seconds /= 2;
-    }
     public static void AddReward(string Name, float count)
     {
         GameController.singleton.GameMoney[Name] += count;
@@ -153,15 +151,6 @@ public class FactoryTimer
     void OnTick()
     {
         Seconds--;
-
-        if (GameController.singleton.GameState == GameState.MainMenu)
-        {
-            //TODO: переделать на состояние игры а не "iProgress != null"
-        }
-        else if (GameController.singleton.GameState == GameState.Game)
-        {
-            //
-        }
 
         if (Seconds > 0)
         {

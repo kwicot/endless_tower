@@ -23,6 +23,13 @@ public class GameController : MonoBehaviour
         {"Blue", 0 },
         {"Crystal", 0 }
     };
+    
+    public readonly Dictionary<string, int> koeffChange = new Dictionary<string, int>()
+    {
+        {"Red", 25 },
+        {"Green", 100 },
+        {"Blue", 1000 }
+    };  
         
 
     public GameDifficult GameDifficult

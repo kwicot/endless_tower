@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Model;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,12 @@ public class GameController : MonoBehaviour
     public List<EnemyView> L_Enemy = new List<EnemyView>();
     public SettingWave SettingWave = new SettingWave();
     private GameDifficult gameDifficult = GameDifficult.Easy;
+    public static UIParam local = new UIParam();
+    public static  UIParam global = new UIParam();
+    public static  UFParam current = new UFParam();
+    Dictionary<string, Func<float>> param = new Dictionary<string, Func<float>>();
+    Dictionary<string, Func<string, float, float,float>> param2 = new Dictionary<string, Func<string, float, float,float>>();
+    
 
     public Dictionary<string, float> GameMoney = new Dictionary<string, float>()
     {
@@ -80,7 +87,55 @@ public class GameController : MonoBehaviour
     public int EnemyPerWave;
     //Временное
 
+    System.Func<float> parametr = () =>
+    {
+        string key = "Damage";
+        float v = 1.0f;
+        int upper = global.Get(key) + local.Get(key);
+        for (int i = 0; i < upper; i++)
+        {
+            v *= 1.2f;
+        }
+        return v;
+    };
 
+    public System.Action Damage = () =>
+    {
+        string key = "Damage";
+        // current.Set(key, param[key].Invoke());
+        current.Set(key, M(key, 1, 1.2f));
+        
+        // передать M(key, 1, 1.2f)
+        current.Next(key, 1);
+    };
+    private System.Action<Func<string, float, float,float>> parame = (f) =>
+    {
+        string key = "Damage";
+        
+        // local.SetA(key, true, f);
+        
+        // передать M(key, 1, 1.2f)
+    };
+    static System.Func<string, float, float,float> M = (key, b, k) =>
+    {
+        float v = b;
+        int upper = global.Get(key) + local.Get(key);
+        for (int i = 0; i < upper; i++)
+        {
+            v *= k;
+        }
+        return v;
+    };
+    System.Func<string, float, float,float> S = (key, b, k) =>
+    {
+        float v = b;
+        int upper = global.Get(key) + local.Get(key);
+        for (int i = 0; i < upper; i++)
+        {
+            v += k;
+        }
+        return v;
+    };
 
     private void Awake()
     {
@@ -94,6 +149,50 @@ public class GameController : MonoBehaviour
 
         //TODO: это установить с настроек меню
         GameDifficult = GameDifficult.Medium;
+        Init();
+    }
+
+    void Init()
+    {
+        
+        // тут подписка на изменения в самой игре и ГУИ 
+        local.Set("HP", 0);
+        local.Set("AttackSpeed", 0);
+        local.Set("AttackRange", 0);
+        local.Set("Regeneration", 0);
+        local.Set("Defense", 0);
+        
+        
+        local.SetA("Damage", true, Damage);
+        global.SetA("Damage",true, Damage);
+        
+        // тут подписка на изменения в меню
+        global.Set("HP", 0);
+        global.Set("AttackSpeed", 0);
+        global.Set("AttackRange", 0);
+        global.Set("Regeneration", 0);
+        global.Set("Defense", 0);
+        
+        // ловит изменения и считает
+        current.Set("HP", 0);
+        current.Set("Damage", 0);
+        
+        current.Set("AttackSpeed", 0);
+        current.Set("AttackRange", 0);
+        current.Set("Regeneration", 0);
+        current.Set("Defense", 0);
+        
+        
+
+        param.Add("Damage", parametr);
+        param2.Add("HP", M);
+        float d = param["Damage"].Invoke();
+        float hp = param2["HP"].Invoke("HP", 1, 1.2f);
+        float att = M("AttackSpeed", 1, 1.2f);
+        
+        // получить значение
+        var dam = current.Get("Damage");
+
     }
 
     /// <summary>

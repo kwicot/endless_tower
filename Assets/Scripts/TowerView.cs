@@ -28,15 +28,7 @@ public class TowerView : MonoBehaviour
             if (timeCalculate <= 0) //Tower logic
             {
                 EnemyView closets = null;
-                // уберем пустые нулевые (правда откуда они?)
-                int count = L_Enemy.Count - 1;
-                // for (int i = count; i >= 0; i--)
-                // {
-                //     if (L_Enemy[i] == null) 
-                //         L_Enemy.RemoveAt(i);
-                // }
-
-                count = L_Enemy.Count;
+                int count = L_Enemy.Count;
                 if (count > 0)
                 {
                     float closetsDistance = float.MaxValue;

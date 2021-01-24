@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35176141f61847819ae1cffabac5962b, type: 3}
   m_Name: SOEnemy_1
   m_EditorClassIdentifier: 
-  HP: 10
+  HP: 2
   Speed: 1
   Damage: 10
   Type: 0

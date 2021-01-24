@@ -52,7 +52,7 @@ MonoBehaviour:
   SpawnInterval: 0.1
   WaveInterval: 3
   EnemyPerWave: 50
-  GameState: 1
+  GameState: 0
 --- !u!114 &314706817
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,6 +7,12 @@ public class TowerView : MonoBehaviour
     public Tower tower;
     private List<EnemyView> L_Enemy => GameController.singleton.L_Enemy;
 
+    private float HPMax => GameController.current.Get("HP");
+    private float Regeneration => GameController.current.Get("Regeneration");
+    private float Damage => GameController.current.Get("Damage");
+    private float AttackRange => GameController.current.Get("AttackRange");
+    private float AttackSpeed => GameController.current.Get("AttackSpeed");
+
     void Start()
     {
         GameController.singleton.tower = this;
@@ -14,10 +20,11 @@ public class TowerView : MonoBehaviour
     private float timeCalculate = 0.1f;
     private void Update()
     {
-        if(tower.HP < tower.HPMax)
+        if (tower.HP < HPMax)
         {
-            tower.HP += tower.Regeneration * Time.deltaTime;
-            if (tower.HP > tower.HPMax) tower.HP = tower.HPMax;
+            tower.HP += Regeneration * Time.deltaTime;
+            if (tower.HP > HPMax) 
+                tower.HP = HPMax;
         }
     }
     public void AttackUpdate()
@@ -45,11 +52,11 @@ public class TowerView : MonoBehaviour
                         }
                     }
 
-                    if (closetsDistance < tower.AttackRange)
+                    if (closetsDistance < AttackRange)
                     {
-                        closets.TakeDamage(tower.Damage);
+                        closets.TakeDamage(Damage);
                         // атака у нас производится тут. поэтому и сброс таймера тоже тут
-                        timeCalculate = tower.AttackSpeed;
+                        timeCalculate = AttackSpeed;
                     }
                 }
             } //Tower logic end

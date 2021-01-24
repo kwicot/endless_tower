@@ -25,17 +25,13 @@ public static class Utils
     /// Удалить все дочерние gameObject элементы определенного Transform (родитель)
     /// </summary>
     /// <param name="tr">родитель</param>
-    /// <param name="ignoreFirst">игнорировать первый</param>
-    public static void DestroyChild(Transform tr, bool ignoreFirst = false)
+    public static void DestroyChild(Transform tr)
     {
-        var children = new List<GameObject>();
-        foreach (Transform child in tr)
-            children.Add(child.gameObject);
-
-        if (ignoreFirst && children.Count > 0)
-            children.RemoveAt(0);
-
-        children.ForEach(child => UnityEngine.MonoBehaviour.DestroyImmediate(child));
+        if (tr == null) return;
+        while (tr.childCount > 0)
+        {
+            UnityEngine.MonoBehaviour.DestroyImmediate(tr.GetChild(0).gameObject);
+        }
     }
 
     /// <summary>

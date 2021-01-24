@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour
     public static System.Action AttackRange = () =>
     {
         string key = "AttackRange";
-        current.Set(key, S(key, 4, 0.1f));
+        current.Set(key, S(key, 10, 0.1f));
     };    
     public static System.Action HP = () =>
     {
@@ -84,7 +84,7 @@ public class GameController : MonoBehaviour
     public static System.Action AttackSpeed = () =>
     {
         string key = "AttackSpeed";
-        current.Set(key, S(key, 1, 0.1f));
+        current.Set(key, S(key, 0.1f, 0.1f));
     };
     public static System.Action Damage = () =>
     {

@@ -5,7 +5,7 @@ public class OnOnableElement : MonoBehaviour
     public GameObject[] show;
     public GameObject[] hide;
 
-    private void OnEnable()
+    public void OnEnable()
     {
         if(show != null)
             foreach (var e in show)

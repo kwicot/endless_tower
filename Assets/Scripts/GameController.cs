@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Model;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public static GameController singleton { get; private set; }
+    public static GameState GameState = new GameState();
 
     public TowerView tower;
     public Spawner spawner;
@@ -14,31 +16,9 @@ public class GameController : MonoBehaviour
     public List<EnemyView> L_Enemy = new List<EnemyView>();
     public SettingWave SettingWave = new SettingWave();
     private GameDifficult gameDifficult = GameDifficult.Easy;
-    /// <summary>
-    /// локальные значения параметров улучшений
-    /// </summary>
-    public static UIParam local = new UIParam();
-    /// <summary>
-    /// глобальные значения параметров улучшений (будут браться из сейва)
-    /// </summary>
-    public static  UIParam global = new UIParam();
-    /// <summary>
-    /// текущие значения параметров улучшений (локальные + сумарные)
-    /// </summary>
-    public static  UFParam current = new UFParam();
+    
     // Dictionary<string, Func<float>> param = new Dictionary<string, Func<float>>();
     // Dictionary<string, Func<string, float, float,float>> param2 = new Dictionary<string, Func<string, float, float,float>>();
-    
-
-    public Dictionary<string, float> GameMoney = new Dictionary<string, float>()
-    {
-        {"White",0 },
-        {"Orange",100 },
-        {"Red",0 },
-        {"Green",0 },
-        {"Blue", 0 },
-        {"Crystal", 0 }
-    };
     
     public readonly Dictionary<string, int> koeffChange = new Dictionary<string, int>()
     {
@@ -64,32 +44,32 @@ public class GameController : MonoBehaviour
     public static System.Action Defense = () =>
     {
         string key = "Defense";
-        current.Set(key, M(key, 1, 1.2f));
+        GameState.current.Set(key, M(key, 1, 1.2f));
     };    
     public static System.Action Regeneration = () =>
     {
         string key = "Regeneration";
-        current.Set(key, S(key, 0, 0.1f));
+        GameState.current.Set(key, S(key, 0, 0.1f));
     };
     public static System.Action AttackRange = () =>
     {
         string key = "AttackRange";
-        current.Set(key, S(key, 10, 0.1f));
+        GameState.current.Set(key, S(key, 10, 0.1f));
     };    
     public static System.Action HP = () =>
     {
         string key = "HP";
-        current.Set(key, M(key, 10, 1.2f));
+        GameState.current.Set(key, M(key, 10, 1.2f));
     };
     public static System.Action AttackSpeed = () =>
     {
         string key = "AttackSpeed";
-        current.Set(key, S(key, 0.1f, 0.1f));
+        GameState.current.Set(key, S(key, 0.1f, 0.1f));
     };
     public static System.Action Damage = () =>
     {
         string key = "Damage";
-        current.Set(key, M(key, 1, 1.2f));
+        GameState.current.Set(key, M(key, 1, 1.2f));
         
         // // передать M(key, 1, 1.2f)
         // current.Next(key, 1);
@@ -170,7 +150,7 @@ public class GameController : MonoBehaviour
     static System.Func<string, float, float,float> M = (key, b, k) =>
     {
         float v = b;    // base
-        int upper = global.Get(key) + local.Get(key);
+        int upper = GameState.global.Get(key) + GameState.local.Get(key);
         for (int i = 0; i < upper; i++)
         {
             v *= k;    // koef
@@ -181,7 +161,7 @@ public class GameController : MonoBehaviour
     static System.Func<string, float, float,float> S = (key, b, k) =>
     {
         float v = b;
-        int upper = global.Get(key) + local.Get(key);
+        int upper = GameState.global.Get(key) + GameState.local.Get(key);
         for (int i = 0; i < upper; i++)
         {
             v += k;
@@ -200,17 +180,58 @@ public class GameController : MonoBehaviour
 
 
         //TODO: это установить с настроек меню
-        GameDifficult = GameDifficult.Medium;
+        // GameDifficult = GameDifficult.Medium;
+
+        Load();
+        // Init(false);
+    }
+
+    public void Load()
+    {
+        GameState = PersistentCache.TryLoad<GameState>();
+        GameState.Init();
         Init();
     }
 
-    void Init()
+    public void Save()
     {
-        // инициализируем все значения 
-        foreach (var nameA in nameToAction)
+        PersistentCache.Save(GameState);
+    }
+
+    void Init(bool isNew = false)
+    {
+        if (isNew)
         {
-            Init(nameA.Key,nameA.Value);
+            // GameState.Money = new Dictionary<string, float>()
+            // {
+            //     {"White",0 },
+            //     {"Orange",100 },
+            //     {"Red",0 },
+            //     {"Green",0 },
+            //     {"Blue", 0 },
+            //     {"Crystal", 0 }
+            // };
+            
+            // инициализируем все значения 
+            foreach (var nameA in nameToAction)
+            {
+                Init(nameA.Key,nameA.Value, true);
+            }
         }
+        else
+        {
+            // идем от сейва. но возможно нужно идти как обычно вдруг новые есть
+            var keyGlobal = GameState.global.param.Keys.ToList();
+            foreach (var key in keyGlobal)
+            {
+                if (nameToAction.TryGetValue(key, out Action action))
+                {
+                    Init(key, action, false);
+                }
+            }
+        }
+
+        
         
         
 
@@ -221,17 +242,18 @@ public class GameController : MonoBehaviour
         // float att = M("AttackSpeed", 1, 1.2f);
         
         // получить значение
-        var dam = current.Get("Damage");
+        var dam = GameState.current.Get("Damage");
 
     }
 
-    void Init(string nameElement, Action action)
+    void Init(string nameElement, Action action, bool isNew)
     {
-        local.SetA(nameElement, true, action);
-        global.SetA(nameElement,true, action);
+        GameState.local.SetA(nameElement, true, action);
+        GameState.global.SetA(nameElement,isNew, action);
         
         // set base or save value
-        global.Set(nameElement, 0);
+        if (isNew)
+            GameState.global.Set(nameElement, 0);
         
         // set current
         action?.Invoke();
@@ -263,12 +285,12 @@ public class GameController : MonoBehaviour
             }
             
             
-            if (GameMoney["Orange"] > amount)
+            if (GameState.Money["Orange"] > amount)
             {
                 if (withChange)
                 {
-                    GameMoney["Orange"] -= amount;
-                    GameMoney[resOut] += AmountOut;
+                    GameState.Money["Orange"] -= amount;
+                    GameState.Money[resOut] += AmountOut;
                 }
 
                 return true;
@@ -298,11 +320,11 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public GameState GameState = GameState.MainMenu;
+    public State state = State.MainMenu;
     private float timeCalculate = 0.1f;
     private void Update()
     {
-        if (GameState == GameState.Game)
+        if (state == State.Game)
         {
             // двигаем мобов
             EnemyMove();
@@ -391,13 +413,17 @@ public class GameController : MonoBehaviour
 
     void AddReward(string Name, float Count)
     {
-        GameMoney[Name] += Count;
+        GameState.Money[Name] += Count;
     }
-    
-    
+
+    public void SetDifficeltAndStart(int difficult)
+    {
+        GameDifficult = (GameDifficult) difficult;
+        LoadLevel(1);
+    }
 }
 
-public enum GameState
+public enum State
 {
     MainMenu,
     Game,

@@ -9,6 +9,7 @@ using Debug = UnityEngine.Debug;
 public class ConversionElement : MonoBehaviour
 {
     private GameController GC => GameController.singleton;
+    private Dictionary<string, float> Money => GameController.GameState.Money;
     
     // что меняем
     public Text txInRes;
@@ -37,7 +38,7 @@ public class ConversionElement : MonoBehaviour
     private void Awake()
     {
         Init("Green");
-        GC.GameMoney["Orange"] = 10000;
+        Money["Orange"] = 10000;
     }
 
     public void Init(string resOut, string resIn = "Orange")
@@ -65,11 +66,11 @@ public class ConversionElement : MonoBehaviour
                 {
                     int amountOut = listAmountOut[iterator];
                     int amountIn = amountOut * koef;
-                    if (GC.GameMoney[resIn] >= amountIn)
+                    if (Money[resIn] >= amountIn)
                     {
-                        GC.GameMoney[resIn] -= amountIn;
-                        GC.GameMoney[resOut] += amountOut;
-                        Debug.Log($"{resIn}={GC.GameMoney[resIn]} | {resOut}={GC.GameMoney[resOut]}");
+                        Money[resIn] -= amountIn;
+                        Money[resOut] += amountOut;
+                        Debug.Log($"{resIn}={Money[resIn]} | {resOut}={Money[resOut]}");
                         RefreshProductResources();
                     }
                 });
@@ -78,13 +79,13 @@ public class ConversionElement : MonoBehaviour
             // max
             buttons[3].onClick.AddListener(() =>
             {
-                if (GC.GameMoney[resIn] >= koef)
+                if (Money[resIn] >= koef)
                 {
-                    int amountOut = (int) GC.GameMoney[resIn] / koef;
+                    int amountOut = (int) Money[resIn] / koef;
                     int amountIn = amountOut * koef;
-                    GC.GameMoney[resIn] -= amountIn;
-                    GC.GameMoney[resOut] += amountOut;
-                    Debug.Log($"{resIn}={GC.GameMoney[resIn]} | {resOut}={GC.GameMoney[resOut]}");
+                    Money[resIn] -= amountIn;
+                    Money[resOut] += amountOut;
+                    Debug.Log($"{resIn}={Money[resIn]} | {resOut}={Money[resOut]}");
                     RefreshProductResources();
                 }
             });
@@ -99,7 +100,8 @@ public class ConversionElement : MonoBehaviour
 
     private void RefreshProductResources()
     {
-        txProductResources.text = $"{GC.GameMoney[ResOut]}";
+        if(Money.TryGetValue(ResOut, out float value))
+            txProductResources.text = $"{value}"; // Money[ResOut]
     }
 
     private Color GetColor(string element)

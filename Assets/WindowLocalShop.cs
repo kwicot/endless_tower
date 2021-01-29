@@ -10,13 +10,13 @@ public class WindowLocalShop : UIElement
 
         if (HasPrefab("UpgradeElement"))
         {
-            foreach (var element in GameController.local.P)
+            foreach (var element in GameController.GameState.local.param)
             {
                 var elementGo = Instantiate(GetPrefab("UpgradeElement"), content);
                 UpgradeElement UElelment = elementGo.GetComponent<UpgradeElement>();
                 if (UElelment != null)
                 {
-                    UElelment.Init(element.Key, GameController.local);
+                    UElelment.Init(element.Key, GameController.GameState.local);
                 }
             }
         }

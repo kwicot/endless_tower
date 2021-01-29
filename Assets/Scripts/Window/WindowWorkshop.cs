@@ -10,13 +10,13 @@ public class WindowWorkshop : UIElement
 
         if (HasPrefab("UpgradeElement"))
         {
-            foreach (var element in GameController.global.P)
+            foreach (var element in GameController.GameState.global.param)
             {
                 var elementGo = Instantiate(GetPrefab("UpgradeElement"), content);
                 UpgradeElement UElelment = elementGo.GetComponent<UpgradeElement>();
                 if (UElelment != null)
                 {
-                    UElelment.Init(element.Key, GameController.global);
+                    UElelment.Init(element.Key, GameController.GameState.global);
                 }
             }
         }

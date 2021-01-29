@@ -91,6 +91,6 @@ public class UIManager : MonoBehaviour
         Debug.Log("OnSceneLoaded: " + scene.name);
         Debug.Log(mode);
 
-        GameController.singleton.GameState = GameState.Game;
+        GameController.singleton.state = State.Game;
     }
 }

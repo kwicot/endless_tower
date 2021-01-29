@@ -7,11 +7,11 @@ public class TowerView : MonoBehaviour
     public Tower tower;
     private List<EnemyView> L_Enemy => GameController.singleton.L_Enemy;
 
-    private float HPMax => GameController.current.Get("HP");
-    private float Regeneration => GameController.current.Get("Regeneration");
-    private float Damage => GameController.current.Get("Damage");
-    private float AttackRange => GameController.current.Get("AttackRange");
-    private float AttackSpeed => GameController.current.Get("AttackSpeed");
+    private static float HPMax => GameController.GameState.current.Get("HP");
+    private float Regeneration => GameController.GameState.current.Get("Regeneration");
+    private float Damage => GameController.GameState.current.Get("Damage");
+    private float AttackRange => GameController.GameState.current.Get("AttackRange");
+    private float AttackSpeed => GameController.GameState.current.Get("AttackSpeed");
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class TowerView : MonoBehaviour
     }
     public void AttackUpdate()
     {
-        if (GameController.singleton.GameState == GameState.Game)
+        if (GameController.singleton.state == State.Game)
         {
             timeCalculate -= Time.deltaTime;
             if (timeCalculate <= 0) //Tower logic

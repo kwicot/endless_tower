@@ -3,12 +3,18 @@ using System.Collections.Generic;
 
 public class UFParam
 {
-    [NonSerialized]
-    public System.Action ActionChanged = null;
-    Dictionary<string, float> param = new Dictionary<string, float>();
-    [NonSerialized]
-    Dictionary<string, System.Action> paramA = new Dictionary<string, System.Action>();
+    [NonSerialized] public System.Action ActionChanged = null;
+    [NonSerialized] Dictionary<string, System.Action> paramA = new Dictionary<string, System.Action>();
 
+    Dictionary<string, float> param = new Dictionary<string, float>();
+
+    public void Init()
+    {
+        if (param == null)
+            param = new Dictionary<string, float>();
+        if (paramA == null)
+            paramA = new Dictionary<string, System.Action>();
+    }
     public float Get(string nameElement)
     {
         float p = 0;
@@ -50,15 +56,21 @@ public class UFParam
     }
 }
 
+[Serializable]
 public class UIParam
 {
-    [NonSerialized]
-    public System.Action ActionChanged = null;
-    Dictionary<string, int> param = new Dictionary<string, int>();
-    public Dictionary<string, int> P => param;
+    [NonSerialized] public System.Action ActionChanged = null;
+    [NonSerialized] Dictionary<string, System.Action> paramA = new Dictionary<string, System.Action>();
     
-    [NonSerialized]
-    Dictionary<string, System.Action> paramA = new Dictionary<string, System.Action>();
+    public Dictionary<string, int> param = new Dictionary<string, int>();
+
+    public void Init()
+    {
+        if (param == null)
+            param = new Dictionary<string, int>();
+        if (paramA == null)
+            paramA = new Dictionary<string, System.Action>();
+    }
 
     public int Get(string nameElement)
     {
@@ -85,13 +97,14 @@ public class UIParam
             if (!paramA.ContainsKey(nameElement))
             {
                 paramA[nameElement] = action;
-                if (_new)
-                {
-                    // устанавливаем начальное значение
-                    Set(nameElement, 0);
-                }
             }
             else paramA[nameElement] += action;
+            
+            if (_new)
+            {
+                // устанавливаем начальное значение
+                Set(nameElement, 0);
+            }
         }
     }
 

@@ -42,7 +42,7 @@ public class UpgradeElement : MonoBehaviour
 
     void Refresh()
     {
-        txParameter.text = $"{nameParam}: {GameController.current.Get(nameParam)}";
+        txParameter.text = $"{nameParam}: {GameController.GameState.current.Get(nameParam)}";
         txBonus.text = "+";
         txUpdate.text = $"{_param.Get(nameParam)}";
         txCost.text = $"{2}";

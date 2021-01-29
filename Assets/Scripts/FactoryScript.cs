@@ -88,7 +88,7 @@ public class FactoryScript : MonoBehaviour
     
     public static void AddReward(string Name, float count)
     {
-        GameController.singleton.GameMoney[Name] += count;
+        GameController.GameState.Money[Name] += count;
     }
 
     public void SaveData()
@@ -167,7 +167,7 @@ public class FactoryTimer
         FactoryScript.AddReward(Resource, Reward);
         Seconds = MaxSeconds;
         
-        Debug.Log("Reward- " + GameController.singleton.GameMoney[Resource]);
+        Debug.Log("Reward- " + GameController.GameState.Money[Resource]);
     }
     
     public void UpdateMaxTime()

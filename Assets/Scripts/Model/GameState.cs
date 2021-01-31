@@ -20,6 +20,7 @@ public class GameState
     [NonSerialized]public UFParam current = new UFParam();
 
     public Dictionary<string, float> Money = new Dictionary<string, float>();
+    public List<FactoryTimer> FactoryTimers = new List<FactoryTimer>();
 
     public void Init()
     {

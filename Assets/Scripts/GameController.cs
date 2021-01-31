@@ -41,11 +41,11 @@ public class GameController : MonoBehaviour
         
     };
     
-    public static System.Action Defense = () =>
+    public static void Defense ()
     {
         string key = "Defense";
         GameState.current.Set(key, M(key, 1, 1.2f));
-    };    
+    }
     public static System.Action Regeneration = () =>
     {
         string key = "Regeneration";
@@ -178,23 +178,39 @@ public class GameController : MonoBehaviour
         }
         else Destroy(gameObject);
 
+        factory = GetComponent<FactoryScript>();
+    }
 
-        //TODO: это установить с настроек меню
-        // GameDifficult = GameDifficult.Medium;
-
+    private void Start()
+    {
         Load();
         // Init(false);
     }
 
     public void Load()
     {
-        GameState = PersistentCache.TryLoad<GameState>();
+        bool isNew = true;
+        try
+        {
+            GameState = PersistentCache.TryLoad<GameState>();
+            isNew = false;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"{GetType().Name} - Load: BAD save");
+        }
+        
         GameState.Init();
-        Init();
+        Init(isNew);
     }
 
     public void Save()
     {
+        // TODO: переделать чтобы брало беспосредственно из сейва
+        // сохраняем текущее состояние таймеров
+        factory.SaveData();
+        
+        // сохраняем 
         PersistentCache.Save(GameState);
     }
 
@@ -202,21 +218,13 @@ public class GameController : MonoBehaviour
     {
         if (isNew)
         {
-            // GameState.Money = new Dictionary<string, float>()
-            // {
-            //     {"White",0 },
-            //     {"Orange",100 },
-            //     {"Red",0 },
-            //     {"Green",0 },
-            //     {"Blue", 0 },
-            //     {"Crystal", 0 }
-            // };
-            
             // инициализируем все значения 
             foreach (var nameA in nameToAction)
             {
                 Init(nameA.Key,nameA.Value, true);
             }
+            
+            
         }
         else
         {
@@ -229,11 +237,19 @@ public class GameController : MonoBehaviour
                     Init(key, action, false);
                 }
             }
+            
+            factory.LoadData();
         }
 
-        
-        
-        
+        if (GameState.FactoryTimers == null || GameState.FactoryTimers.Count == 0)
+        {
+            // 
+            factory.InitDefault();
+        }
+
+
+
+
 
         // param.Add("Damage", parametr);
         // param2.Add("HP", M);

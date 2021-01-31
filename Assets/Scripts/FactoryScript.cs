@@ -7,85 +7,77 @@ using UnityEngine.UI;
 public class FactoryScript : MonoBehaviour
 {
     public float OrangeTimeMax;
+    public float MaxTimer = 24 * 60 * 60;
     public int OrangeReward;
-    FactoryTimer OrangeTimer;
-    FactoryTimer RedTimer;
-    FactoryTimer BlueTimer;
-    FactoryTimer GreenTimer;
+    public FactoryTimer OrangeTimer;
+    public FactoryTimer RedTimer;
+    public FactoryTimer BlueTimer;
+    public FactoryTimer GreenTimer;
 
     //
     public Transform pnTimer;
     public GameObject[] prefabs;
     
-    void Start()
+    // void Awake()
+    // {
+    //     GameController.singleton.factory = this;
+    // }
+
+    public void StartFactory(bool isNew = false)
     {
-        GameController.singleton.factory = this;
-        
-        //TODO: тут думаю нужно будет взять из сохранки данные таймеров
-        
+        if (isNew)
+            InitDefault();
+        else
+        {
+            
+        }
+    }
+
+    public void InitDefault()
+    {
         OrangeTimer = new FactoryTimer()
         {
-            Seconds = OrangeTimeMax, 
-            MaxSeconds = OrangeTimeMax, 
+            Seconds = MaxTimer, 
+            MaxSeconds = MaxTimer,
             Resource = "Orange", 
-            Reward = OrangeReward
+            Reward = 1
         };
         OrangeTimer.Init();
         
         RedTimer = new FactoryTimer()
         {
-            Seconds = OrangeTimeMax, 
-            MaxSeconds = OrangeTimeMax, 
+            Seconds = MaxTimer, 
+            MaxSeconds = MaxTimer, 
             Resource = "Red", 
-            Reward = OrangeReward
+            Reward = 1
         };
         RedTimer.Init();
         
         BlueTimer = new FactoryTimer()
         {
-            Seconds = OrangeTimeMax, 
-            MaxSeconds = OrangeTimeMax, 
+            Seconds = MaxTimer, 
+            MaxSeconds = MaxTimer, 
             Resource = "Blue", 
-            Reward = OrangeReward
+            Reward = 1
         };
         BlueTimer.Init();
         
         GreenTimer = new FactoryTimer()
         {
-            Seconds = OrangeTimeMax, 
-            MaxSeconds = OrangeTimeMax, 
+            Seconds = MaxTimer,
+            MaxSeconds = MaxTimer, 
             Resource = "Green", 
-            Reward = OrangeReward
+            Reward = 1
         };
         GreenTimer.Init();
         
-        
-        // TODO: перенести в открытие окна 
-        // create prefab
-        if (HasPrefab("FabricTimer"))
-        {
-            // orange
-            var element = Instantiate(GetPrefab("FabricTimer"), pnTimer);
-            var ft = element.GetComponent<FabricTimer>();
-            if (ft) ft.Init(OrangeTimer);
-            
-            // red
-            element = Instantiate(GetPrefab("FabricTimer"), pnTimer);
-            ft = element.GetComponent<FabricTimer>();
-            if (ft) ft.Init(RedTimer);
-            
-            // blue
-            element = Instantiate(GetPrefab("FabricTimer"), pnTimer);
-            ft = element.GetComponent<FabricTimer>();
-            if (ft) ft.Init(BlueTimer);
-            
-            // green
-            element = Instantiate(GetPrefab("FabricTimer"), pnTimer);
-            ft = element.GetComponent<FabricTimer>();
-            if (ft) ft.Init(GreenTimer);
-        }
+        GameController.GameState.FactoryTimers = new List<FactoryTimer>();
+        GameController.GameState.FactoryTimers.Add(OrangeTimer);
+        GameController.GameState.FactoryTimers.Add(RedTimer);
+        GameController.GameState.FactoryTimers.Add(BlueTimer);
+        GameController.GameState.FactoryTimers.Add(GreenTimer);
     }
-    
+
     public static void AddReward(string Name, float count)
     {
         GameController.GameState.Money[Name] += count;
@@ -93,11 +85,64 @@ public class FactoryScript : MonoBehaviour
 
     public void SaveData()
     {
-
+        GameController.GameState.FactoryTimers.Clear();
+        GameController.GameState.FactoryTimers.Add(OrangeTimer);
+        GameController.GameState.FactoryTimers.Add(RedTimer);
+        GameController.GameState.FactoryTimers.Add(BlueTimer);
+        GameController.GameState.FactoryTimers.Add(GreenTimer);
     }
+    
     public void LoadData()
     {
-        
+        foreach (var timer in GameController.GameState.FactoryTimers)
+        {
+            if (timer == null) continue;
+            
+            if (timer.Resource == "Orange")
+            {
+                OrangeTimer = new FactoryTimer()
+                {
+                    Seconds = timer.Seconds,
+                    MaxSeconds = timer.MaxSeconds,
+                    Resource = timer.Resource,
+                    Reward = timer.Reward
+                };
+                OrangeTimer.Init();
+            }
+            else if (timer.Resource == "Red")
+            {
+                RedTimer = new FactoryTimer()
+                {
+                    Seconds = OrangeTimeMax, 
+                    MaxSeconds = OrangeTimeMax, 
+                    Resource = "Red", 
+                    Reward = OrangeReward
+                };
+                RedTimer.Init();
+            }
+            else if (timer.Resource == "Blue")
+            {
+                BlueTimer = new FactoryTimer()
+                {
+                    Seconds = OrangeTimeMax, 
+                    MaxSeconds = OrangeTimeMax, 
+                    Resource = "Blue", 
+                    Reward = OrangeReward
+                };
+                BlueTimer.Init();
+            }
+            else if (timer.Resource == "Green")
+            {
+                GreenTimer = new FactoryTimer()
+                {
+                    Seconds = OrangeTimeMax, 
+                    MaxSeconds = OrangeTimeMax, 
+                    Resource = "Green", 
+                    Reward = OrangeReward
+                };
+                GreenTimer.Init();
+            }
+        }
     }
 
 
@@ -134,7 +179,7 @@ public class FactoryTimer
     public string Resource;
     public float Seconds;
     public float MaxSeconds;
-    public int Reward;
+    public float Reward;
     [NonSerialized] public System.Action ActionTick = null;
 
     int min => (int)Seconds / 60;

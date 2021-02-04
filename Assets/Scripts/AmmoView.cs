@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class AmmoView : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Ammo ammo;
+    Rigidbody rb;
+    private void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
+        if (!rb) rb = gameObject.AddComponent<Rigidbody>();
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if (ammo.target)
+        {
+            rb.velocity = ammo.target.position - transform.position + ammo.speed;
+        }
     }
 }

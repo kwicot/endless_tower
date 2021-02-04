@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ammo : MonoBehaviour
+[System.Serializable]
+public class Ammo
 {
-    public SOAmmoBase soAmmo;
+    public AmmoTypes Type;
     public Transform target;
-
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    public float speed;
+    public float DamageMultiplayer;
+    public float EffectTime;
+    public float EffectRadius;
+}
+public enum AmmoTypes
+{
+    Standart,
+    Fire,
+    Ice,
+    BlackHole
 }

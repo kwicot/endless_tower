@@ -193,11 +193,20 @@ public class GameController : MonoBehaviour
         try
         {
             GameState = PersistentCache.TryLoad<GameState>();
-            isNew = false;
+            if (GameState == null)
+            {
+                GameState = new GameState();
+            }
+            else
+            {
+                isNew = false;
+            }
+
         }
         catch (Exception e)
         {
             Debug.LogError($"{GetType().Name} - Load: BAD save");
+            GameState = new GameState();
         }
         
         GameState.Init();

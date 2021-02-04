@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TowerView : MonoBehaviour
 {
+    public GameObject AmmoPrefab;
     public Tower tower;
     private List<EnemyView> L_Enemy => GameController.singleton.L_Enemy;
 

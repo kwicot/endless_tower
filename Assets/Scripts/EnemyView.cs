@@ -7,7 +7,6 @@ public class EnemyView : MonoBehaviour
 {
     [SerializeField]private Transform target;
 
-    public SOEnemy SOEnemy;
     private Enemy enemy;
     private Rigidbody Rb;
     public float Damage => enemy.Damage;
@@ -51,5 +50,14 @@ public class EnemyView : MonoBehaviour
             Destroy(gameObject);
         }
         Debug.Log("Enemy HP= " + enemy.HP);
+    }
+    public IEnumerator enumeratorDamage(float time, float interval, float damage)
+    {
+        while (time > 0)
+        {
+            time -= interval;
+            TakeDamage(damage);
+            yield return new WaitForSeconds(interval);
+        }
     }
 }

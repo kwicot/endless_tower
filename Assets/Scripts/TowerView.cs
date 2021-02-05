@@ -64,11 +64,13 @@ public class TowerView : MonoBehaviour
                         var obj = Instantiate(AmmoPrefab,AmmoSpawnPoint.transform.position,Quaternion.identity);
                         obj.GetComponent<AmmoView>().ammo = new Ammo()
                         {
-                            DamageMultiplayer = 2,
-                            EffectRadius = 2,
+                            Type = AmmoTypes.BlackHole,
+                            DamageMultiplayer = 1,
+                            EffectRadius = 5,
                             EffectTime = 2,
-                            speed = 10,
-                            target = closets.transform,
+                            Speed = 10,
+                            Target = closets.transform,
+                            Damage = tower.Damage
                         };
                     }
                 }

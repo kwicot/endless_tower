@@ -52,7 +52,7 @@ public class EnemyView : MonoBehaviour
         }
         Debug.Log("Enemy HP= " + enemy.HP);
     }
-    public IEnumerator enumeratorDamage(float time, float interval, float damage)
+    public IEnumerator ienumeratorDamage(float time, float interval, float damage)
     {
         while (time > 0)
         {

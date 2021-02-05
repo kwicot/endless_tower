@@ -6,8 +6,9 @@ using UnityEngine;
 public class Ammo
 {
     public AmmoTypes Type;
-    public Transform target;
-    public float speed;
+    public Transform Target;
+    public float Damage;
+    public float Speed;
     public float DamageMultiplayer;
     public float EffectTime;
     public float EffectRadius;

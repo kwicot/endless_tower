@@ -535,6 +535,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 26.72, y: 0, z: 0}
+--- !u!114 &262054198 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 314706817, guid: eb30a9c18b771504bba70c2cd6b80392, type: 3}
+  m_PrefabInstance: {fileID: 3430937362278738535}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 666fb5beb202a8b47b85377618403658, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &276392085
 GameObject:
   m_ObjectHideFlags: 0
@@ -5243,6 +5254,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3430937361562283869, guid: eb30a9c18b771504bba70c2cd6b80392, type: 3}
+      propertyPath: factory
+      value: 
+      objectReference: {fileID: 262054198}
     - target: {fileID: 3430937361562283870, guid: eb30a9c18b771504bba70c2cd6b80392, type: 3}
       propertyPath: m_Name
       value: GameController

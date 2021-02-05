@@ -4195,22 +4195,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TowerPrefab
       objectReference: {fileID: 0}
-    - target: {fileID: 4925874729106255696, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
-      propertyPath: tower.HPMax
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4925874729106255696, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
-      propertyPath: tower.Damage
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4925874729106255696, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
-      propertyPath: tower.AttackRange
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4925874729106255696, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
-      propertyPath: tower.AttackSpeed
-      value: 0.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
 --- !u!1001 &2901940355345550016

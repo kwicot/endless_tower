@@ -15,7 +15,7 @@ public class AmmoView : MonoBehaviour
     {
         if (ammo.target)
         {
-            rb.velocity = ammo.target.position - transform.position + ammo.speed;
+            rb.velocity = ammo.target.position - transform.position * ammo.speed;
         }
     }
 }

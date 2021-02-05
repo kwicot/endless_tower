@@ -7,6 +7,7 @@ public class EnemyView : MonoBehaviour
 {
     [SerializeField]private Transform target;
 
+    public SOEnemy SOEnemy;
     private Enemy enemy;
     private Rigidbody Rb;
     public float Damage => enemy.Damage;

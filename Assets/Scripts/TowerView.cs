@@ -5,6 +5,7 @@ using UnityEngine;
 public class TowerView : MonoBehaviour
 {
     public GameObject AmmoPrefab;
+    public GameObject AmmoSpawnPoint;
     public Tower tower;
     private List<EnemyView> L_Enemy => GameController.singleton.L_Enemy;
 
@@ -55,9 +56,20 @@ public class TowerView : MonoBehaviour
 
                     if (closetsDistance < AttackRange)
                     {
-                        closets.TakeDamage(Damage);
                         // атака у нас производится тут. поэтому и сброс таймера тоже тут
                         timeCalculate = AttackSpeed;
+
+                        //closets.TakeDamage(Damage);
+
+                        var obj = Instantiate(AmmoPrefab,AmmoSpawnPoint.transform.position,Quaternion.identity);
+                        obj.GetComponent<AmmoView>().ammo = new Ammo()
+                        {
+                            DamageMultiplayer = 2,
+                            EffectRadius = 2,
+                            EffectTime = 2,
+                            speed = 10,
+                            target = closets.transform,
+                        };
                     }
                 }
             } //Tower logic end

@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1126774277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1126774278}
+  m_Layer: 0
+  m_Name: AmmoSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1126774278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126774277}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.576, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4341855971136435063}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4341855971136435064
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,7 +62,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2.19, z: 0}
   m_LocalScale: {x: 1, y: 4, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1126774278}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -139,12 +170,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e96e9abbabd4e145be5e2088227ec78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AmmoPrefab: {fileID: 5880295072431174445, guid: 120b2d2dbaeeaab40953288ce0808e98, type: 3}
+  AmmoSpawnPoint: {fileID: 1126774277}
   tower:
-    AttackRange: 3
-    AttackSpeed: 0
-    Damage: 0
+    Damage: 10
+    Impetus: 0
     CriticalDamageChance: 0
     CriticalDamageMultiplier: 0
+    AttackSpeed: 0.2
+    AttackRange: 10
     MultiFireChance: 0
     MultiFireTargets: 0
     RapidFireChance: 0
@@ -154,13 +188,28 @@ MonoBehaviour:
     BounceCountMax: 0
     BlackHoleChance: 0
     BlackHoleTime: 0
+    FireBallChance: 0
+    FireBallDamage: 0
+    IceBallChance: 0
+    IceBallDamage: 0
+    IceBallFreezeTime: 0
     HP: 100
+    HPMax: 100
     Regeneration: 1
+    Defense: 0
     BlockChance: 0
-    BlockDamage: 0
     SlowAuraRange: 0
     SlowAuraPerfomance: 0
     DamageAuraRange: 0
     DamageAuraPerfomance: 0
     DamageIncreaseAuraRange: 0
     DamageIncreaseAuraPerfomance: 0
+    BOOMChance: 0
+    BonusWhiteCubePerKill: 0
+    BonusWhiteCubePerWave: 0
+    BonusOrangeCubePerKill: 0
+    BonusOrangeCubePerWave: 0
+    ChanceCrystalPerKill: 0
+    ChanceCrystalPerWave: 0
+    AutoCollectorSpeed: 0
+    AutoCollectorRange: 0

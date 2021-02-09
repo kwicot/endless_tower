@@ -8,18 +8,17 @@ public class UpgradeElement : MonoBehaviour
 {
     private GameController GC => GameController.singleton;
     
-    public Text txParameter;
-    public Text txBonus;
-    public Text txUpdate;
-    public Button btUpgrader;
-    public Text txCost;
-    public Image iResource;
+    public Text txParameter;            // Название параметра и текуще значение
+    public Text txBonus;                // бонус улучшения
+    public Text txUpdate;               // уровень улучшения
+    public Button btUpgrader;           // кнопка улучшений
+    public Text txCost;                 // стоимост ьулучшения
+    public Image iResource;             // ресурс затрачиыаемый на улучшение
     
     // what
     private string nameParam = string.Empty;
     private UIParam _param;
-    
-    // How
+    private ParameterVar _parameterVar;
 
     private void Awake()
     {
@@ -30,6 +29,10 @@ public class UpgradeElement : MonoBehaviour
     {
         nameParam = param;
         _param = data;
+
+        if (GC.nameToValues.TryGetValue(nameParam, out ParameterVar value))
+            _parameterVar = value;
+        else Debug.LogError($"{GetType().Name} - Init: ERROR {param}");
         
         btUpgrader.onClick.RemoveAllListeners();
         btUpgrader.onClick.AddListener(Click);
@@ -42,27 +45,26 @@ public class UpgradeElement : MonoBehaviour
 
     void Refresh()
     {
-        txParameter.text = $"{nameParam}: {GameController.GameState.current.Get(nameParam)}";
-        txBonus.text = "+";
-        txUpdate.text = $"{_param.Get(nameParam)}";
-        txCost.text = $"{2}";
+        txParameter.text = $"{nameParam}: {Utils.Round(GameController.GameState.current.Get(nameParam))}";
+        txBonus.text = $"({Utils.Round(_parameterVar.NextParameter)})";
+        txUpdate.text = $"{Utils.Round(_param.Get(nameParam))}";
+        // txCost.text = $"{GC.GetCost(nameParam)}";
+        txCost.text = $"{Utils.Round(_parameterVar.NextCost)}";
     }
 
     void Click()
     {
         // проверка на купить
-        //
+        if (!GC.CanBuy(_parameterVar.NextCost))
+            return;
+
+        // оплата
+        GC.Buy(_parameterVar.NextCost);
         
         int value = _param.Get(nameParam);
         value += 1;
-        
         // улучшить
         _param.Set(nameParam, value);
-        // отобразить результат
-        // новое значение
-        
-        
-        // стоимость нового улучшения
     }
 
     private void OnDisable()

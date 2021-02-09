@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public static class Utils
 {
@@ -46,5 +48,16 @@ public static class Utils
             list.ForEach(child => UnityEngine.MonoBehaviour.DestroyImmediate(child as GameObject));
             list.Clear();
         }
+    }
+
+    public static float Round(float value, int places = 2)
+    {
+        var p = 1;
+        for (int i = 0; i < places; i++)
+            p *= 10;
+
+        var result = (float) Math.Round(value * p) / p;  
+        
+        return result;
     }
 }

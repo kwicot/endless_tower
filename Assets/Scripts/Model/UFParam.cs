@@ -59,7 +59,7 @@ public class UFParam
 [Serializable]
 public class UIParam
 {
-    [NonSerialized] public System.Action ActionChanged = null;
+    [NonSerialized] public System.Action<string> ActionChanged = null;
     [NonSerialized] Dictionary<string, System.Action> paramA = new Dictionary<string, System.Action>();
     
     public Dictionary<string, int> param = new Dictionary<string, int>();
@@ -84,7 +84,7 @@ public class UIParam
         param[nameElement] = _value;
         
         // на всех
-        ActionChanged?.Invoke();
+        ActionChanged?.Invoke(nameElement);
         // индивидуальный
         if (paramA.TryGetValue(nameElement, out Action individualAction))
             individualAction?.Invoke();

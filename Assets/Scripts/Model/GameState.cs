@@ -18,6 +18,7 @@ public class GameState
     /// текущие значения параметров улучшений (локальные + сумарные)
     /// </summary>
     [NonSerialized]public UFParam current = new UFParam();
+    [NonSerialized]public UFParam currentCost = new UFParam();
 
     public Dictionary<string, float> Money = new Dictionary<string, float>();
     public List<FactoryTimer> FactoryTimers = new List<FactoryTimer>();
@@ -34,6 +35,12 @@ public class GameState
         {
             current = new UFParam();
             current.Init();
+        }
+
+        if (currentCost == null)
+        {
+            currentCost = new UFParam();
+            currentCost.Init();
         }
 
         if (global == null)

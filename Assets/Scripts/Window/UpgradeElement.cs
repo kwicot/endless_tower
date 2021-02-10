@@ -49,17 +49,18 @@ public class UpgradeElement : MonoBehaviour
         txBonus.text = $"({Utils.Round(_parameterVar.NextParameter)})";
         txUpdate.text = $"{Utils.Round(_param.Get(nameParam))}";
         // txCost.text = $"{GC.GetCost(nameParam)}";
-        txCost.text = $"{Utils.Round(_parameterVar.NextCost)}";
+        txCost.text =
+            $"{((_param.TypeParam == TypeParam.Local) ? Utils.Round(_parameterVar.NextLocalCost) : Utils.Round(_parameterVar.NextCost))}";
     }
 
     void Click()
     {
         // проверка на купить
-        if (!GC.CanBuy(_parameterVar.NextCost))
+        if (!GC.CanBuy(_param.TypeParam == TypeParam.Local ? _parameterVar.NextLocalCost : _parameterVar.NextCost))
             return;
 
         // оплата
-        GC.Buy(_parameterVar.NextCost);
+        GC.Buy(_param.TypeParam == TypeParam.Local ? _parameterVar.NextLocalCost : _parameterVar.NextCost);
         
         int value = _param.Get(nameParam);
         value += 1;

@@ -22,6 +22,7 @@ public class ParameterVar
     public float baseCost;
     public float koefCost;
     public float NextCost;
+    public float NextLocalCost;
     public float NextParameter;
     public TypeAddition Type;
 }
@@ -44,9 +45,7 @@ public class GameController : MonoBehaviour
     public SettingWave SettingWave = new SettingWave();
     private GameDifficult gameDifficult = GameDifficult.Easy;
     
-    // Dictionary<string, Func<float>> param = new Dictionary<string, Func<float>>();
-    // Dictionary<string, Func<string, float, float,float>> param2 = new Dictionary<string, Func<string, float, float,float>>();
-    
+
     public readonly Dictionary<string, int> koeffChange = new Dictionary<string, int>()
     {
         {"Red", 25 },
@@ -105,120 +104,6 @@ public class GameController : MonoBehaviour
             koefCost = 1.25f
         }},
     };
-    
-    /// <summary>
-    /// Список переменных и их делегаты для изменения
-    /// </summary>
-    public Dictionary<string, ParametrVariables> nameToAction = new Dictionary<string, ParametrVariables>()
-    {
-        {"Damage", new ParametrVariables()
-        {
-            NameElement = "Damage",
-            Improvement = Damage,
-            Cost = DamageCost
-        }},
-        {"HP", new ParametrVariables()
-        {
-            NameElement = "HP",
-            Improvement = HP,
-            Cost = HPCost
-        }},
-        {"AttackSpeed", new ParametrVariables()
-        {
-            NameElement = "AttackSpeed",
-            Improvement = AttackSpeed,
-            Cost = AttackSpeedCost
-        }},
-        {"AttackRange",  new ParametrVariables()
-        {
-            NameElement = "AttackRange",
-            Improvement = AttackRange,
-            Cost = AttackRangeCost
-        }},
-        {"Regeneration",  new ParametrVariables()
-        {
-            NameElement = "Regeneration",
-            Improvement = Regeneration,
-            Cost = RegenerationCost
-        }},
-        {"Defense",  new ParametrVariables()
-        {
-            NameElement = "Defense",
-            Improvement = Defense,
-            Cost = DefenseCost
-        }},
-        
-    };
-    
-    public static void Defense ()
-    {
-        string key = "Defense";
-        GameState.current.Set(key, M(key, 1, 1.2f));
-    }
-    public static void DefenseCost ()
-    {
-        string key = "Defense";
-        GameState.current.Set(key, M(key, 1, 1.2f));
-    }
-    
-    public static void Regeneration()
-    {
-        string key = "Regeneration";
-        GameState.current.Set(key, S(key, 0, 0.1f));
-    }
-
-    public static void RegenerationCost()
-    {
-        string key = "Regeneration";
-        GameState.current.Set(key, S(key, 0, 0.1f));
-    }
-    public static void AttackRange()
-    {
-        string key = "AttackRange";
-        GameState.current.Set(key, S(key, 10, 0.1f));
-    }
-    public static void AttackRangeCost()
-    {
-        string key = "AttackRange";
-        GameState.current.Set(key, S(key, 10, 0.1f));
-    }
-    public static void HP()
-    {
-        string key = "HP";
-        GameState.current.Set(key, M(key, 10, 1.2f));
-    }
-    public static void HPCost()
-    {
-        string key = "HP";
-        GameState.current.Set(key, M(key, 10, 1.2f));
-    }
-    public static void AttackSpeed()
-    {
-        string key = "AttackSpeed";
-        GameState.current.Set(key, S(key, 0.1f, 0.1f));
-    }
-    public static void AttackSpeedCost()
-    {
-        string key = "AttackSpeed";
-        GameState.current.Set(key, S(key, 0.1f, 0.1f));
-    }
-    public static void Damage()
-    {
-        string key = "Damage";
-        GameState.current.Set(key, M(key, 1, 1.2f));
-        
-        // // передать M(key, 1, 1.2f)
-        // current.Next(key, 1);
-    }
-    
-    public static void DamageCost()
-    {
-        string key = "Damage";
-        GameState.current.Set(key, M(key, 4, 1.25f));
-        
-        // // передать M(key, 1, 1.2f)
-        // current.Next(key, 1);
-    }
 
     float _(string nameElement)
     {
@@ -280,28 +165,7 @@ public class GameController : MonoBehaviour
     public float WaveInterval;
     public int EnemyPerWave;
     //Временное
-
-    // System.Func<float> parametr = () =>
-    // {
-    //     string key = "Damage";
-    //     float v = 1.0f;
-    //     int upper = global.Get(key) + local.Get(key);
-    //     for (int i = 0; i < upper; i++)
-    //     {
-    //         v *= 1.2f;
-    //     }
-    //     return v;
-    // };
-
     
-    // private System.Action<Func<string, float, float,float>> parame = (f) =>
-    // {
-    //     string key = "Damage";
-    //     
-    //     // local.SetA(key, true, f);
-    //     
-    //     // передать M(key, 1, 1.2f)
-    // };
     
     /// <summary>
     /// key - nameElement
@@ -331,50 +195,28 @@ public class GameController : MonoBehaviour
         return v;
     };
     
-    // Multiple
-    static System.Func<string, float, float,float> M = (key, b, k) =>
+    static System.Func<string, float, float, int ,float> L = (key, b, k, a) =>
     {
         float v = b;    // base
-        int upper = GameState.global.Get(key) + GameState.local.Get(key);
-        for (int i = 0; i < upper; i++)
+        int upper = GameState.local.Get(key) + a;
+        if (k > 1f)
         {
-            v *= k;    // koef
+            for (int i = 0; i < upper; i++)
+            {
+                v *= k; // koef
+            }
         }
-        return v;
-    };    
-    // Multiple Next
-    static System.Func<string, float, float,float> MNext = (key, b, k) =>
-    {
-        float v = b;    // base
-        int upper = GameState.global.Get(key) + GameState.local.Get(key) + 1;
-        for (int i = 0; i < upper; i++)
+        else
         {
-            v *= k;    // koef
+            for (int i = 0; i < upper; i++)
+            {
+                v += k;    // koef
+            }
         }
-        return v;
-    };
-    // Summary
-    static System.Func<string, float, float,float> S = (key, b, k) =>
-    {
-        float v = b;
-        int upper = GameState.global.Get(key) + GameState.local.Get(key);
-        for (int i = 0; i < upper; i++)
-        {
-            v += k;
-        }
+
         return v;
     };
-    // Summary
-    static System.Func<string, float, float,float> SNExt = (key, b, k) =>
-    {
-        float v = b;
-        int upper = GameState.global.Get(key) + GameState.local.Get(key) + 1;
-        for (int i = 0; i < upper; i++)
-        {
-            v += k;
-        }
-        return v;
-    };
+    
 
     private void Awake()
     {
@@ -471,20 +313,6 @@ public class GameController : MonoBehaviour
             // 
             factory.InitDefault();
         }
-
-
-
-
-
-        // param.Add("Damage", parametr);
-        // param2.Add("HP", M);
-        // float d = param["Damage"].Invoke();
-        // float hp = param2["HP"].Invoke("HP", 1, 1.2f);
-        // float att = M("AttackSpeed", 1, 1.2f);
-        
-        // получить значение
-        var dam = GameState.current.Get("Damage");
-
     }
 
     
@@ -514,15 +342,6 @@ public class GameController : MonoBehaviour
         else Debug.LogError($"{GetType().Name} - Buy: ERROR GameState.Money not FOUND {nameElement}");
     }
 
-    // public static void DamageCost()
-    // {
-    //     string key = "Damage";
-    //     GameState.current.Set(key, M(key, 4, 1.25f));
-    //     
-    //     // // передать M(key, 1, 1.2f)
-    //     // current.Next(key, 1);
-    // }
-
     public void PAramAction(string nameElement)
     {
         if (nameToValues.TryGetValue(nameElement, out ParameterVar paramOut))
@@ -530,6 +349,7 @@ public class GameController : MonoBehaviour
             GameState.current.Set(nameElement, U(nameElement, paramOut.baseParameter, paramOut.koefParameter, 0));
             // GameState.currentCost.Set(nameElement, M(nameElement, paramOut.baseCost, paramOut.koefCost));
             paramOut.NextCost = U(nameElement, paramOut.baseCost, paramOut.koefCost, 1);
+            paramOut.NextLocalCost = L(nameElement, paramOut.baseCost, paramOut.koefCost, 1);
             paramOut.NextParameter = U(nameElement, paramOut.baseParameter, paramOut.koefParameter, 1);
         }
         else
@@ -538,64 +358,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public float GetCost(string nameElement)
-    {
-        float result = 0f;
-        if (nameToValues.TryGetValue(nameElement, out ParameterVar paramOut))
-        {
-            
-            if (paramOut.Type == TypeAddition.Multiple)
-            {
-                result = MNext(nameElement, paramOut.baseCost, paramOut.koefCost);
-            }
-            else
-            {
-                result = SNExt(nameElement, paramOut.baseCost, paramOut.koefCost);
-            }
-        }
-        else
-        {
-            Debug.LogError($"{GetType().Name} - PAramAction: nameToValues.TryGetValue {nameElement} == null");
-        }
-
-        return result;
-    }
-
-    public float GetNext(string nameElement)
-    {
-        float result = 0f;
-        if (nameToValues.TryGetValue(nameElement, out ParameterVar paramOut))
-        {
-            
-            if (paramOut.Type == TypeAddition.Multiple)
-            {
-                result = MNext(nameElement, paramOut.baseParameter, paramOut.koefParameter);
-            }
-            else
-            {
-                result = SNExt(nameElement, paramOut.baseParameter, paramOut.koefParameter);
-            }
-        }
-        else
-        {
-            Debug.LogError($"{GetType().Name} - PAramAction: nameToValues.TryGetValue {nameElement} == null");
-        }
-
-        return result;
-    }
-
-    void Init(string nameElement, Action action, bool isNew)
-    {
-        GameState.local.SetA(nameElement, true, action);
-        GameState.global.SetA(nameElement,isNew, action);
-        
-        // set base or save value
-        if (isNew)
-            GameState.global.Set(nameElement, 0);
-        
-        // set current
-        action?.Invoke();
-    }
+    
     void Init(string nameElement, bool isNew)
     {
         GameState.local.SetA(nameElement, true, null);
@@ -604,6 +367,8 @@ public class GameController : MonoBehaviour
         // set base or save value
         if (isNew)
             GameState.global.Set(nameElement, 0);
+        
+        GameState.local.Set(nameElement, 0);
         
         // set current
         PAramAction(nameElement);

@@ -57,10 +57,20 @@ public class UFParam
 }
 
 [Serializable]
+public enum TypeParam
+{
+    None,
+    Local,
+    Global
+}
+
+
+[Serializable]
 public class UIParam
 {
     [NonSerialized] public System.Action<string> ActionChanged = null;
     [NonSerialized] Dictionary<string, System.Action> paramA = new Dictionary<string, System.Action>();
+    public TypeParam TypeParam;
     
     public Dictionary<string, int> param = new Dictionary<string, int>();
 

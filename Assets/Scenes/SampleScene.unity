@@ -4195,6 +4195,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: TowerPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 4925874729106255696, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
+      propertyPath: tower.AttackSpeed
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925874729106255696, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
+      propertyPath: AmmoPrefabs.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4925874729106255696, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
+      propertyPath: AmmoPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1409196994942388097, guid: 4c8a79d6f2f5b474193c45746806c623, type: 3}
+    - target: {fileID: 4925874729106255696, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
+      propertyPath: AmmoPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 7784934964392109747, guid: 50cb6c310cfdfe142a6e42a413b750ea, type: 3}
+    - target: {fileID: 4925874729106255696, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
+      propertyPath: AmmoPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 593878214749118154, guid: 8411c0babcda7d643896aae8be76cb21, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
 --- !u!1001 &2901940355345550016

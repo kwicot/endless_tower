@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Model;
 using UnityEngine;
+using System.Collections;
 
 public class EnemyView : MonoBehaviour
 {
@@ -12,13 +11,11 @@ public class EnemyView : MonoBehaviour
     private Rigidbody Rb;
     public float Damage => enemy.Damage;
     
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         target = GameController.singleton.tower.transform;
         Rb = GetComponent<Rigidbody>();
     }
-
     public void Init()
     {
         enemy = new Enemy
@@ -29,15 +26,13 @@ public class EnemyView : MonoBehaviour
             Type = SOEnemy.Type,
         };
     }
-
-    // Update is called once per frame
     public void Move()
     {
-        if (target != null)
+        if (target)
         {
             if (Time.timeScale <= 0.1f) return;
             
-            Vector3 dir = (target.position - transform.position).normalized;
+            var dir = (target.position - transform.position).normalized;
             dir.y = 0;
             Rb.velocity = dir * enemy.Speed * 2;
         }
@@ -52,13 +47,38 @@ public class EnemyView : MonoBehaviour
         }
         Debug.Log("Enemy HP= " + enemy.HP);
     }
-    public IEnumerator ienumeratorDamage(float time, float interval, float damage)
+
+    public void StartIceEffect(float time,float damage)
+    {
+        StartCoroutine(IceEffect(time, damage));
+    }
+
+    public void StartFireEffect(float time,float damage)
+    {
+        StartCoroutine(FireEffect(time, damage));
+    }
+    IEnumerator IceEffect(float time, float damage)
+    {
+        Debug.Log("Enemy ice logic start");
+        float startSpeed = enemy.Speed;
+        enemy.Speed *= 0.7f;
+        while (time > 0)
+        {
+            TakeDamage(damage);
+            time -= Time.deltaTime;
+            Debug.Log("Enemy ice logic");
+            yield return new WaitForFixedUpdate();
+        }
+        enemy.Speed = startSpeed;
+    }
+
+    IEnumerator FireEffect(float time, float damage)
     {
         while (time > 0)
         {
-            time -= interval;
             TakeDamage(damage);
-            yield return new WaitForSeconds(interval);
+            time -= Time.deltaTime;
+            yield return new WaitForFixedUpdate();
         }
     }
 }

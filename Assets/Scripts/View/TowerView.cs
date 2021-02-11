@@ -1,10 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Model;
 
 public class TowerView : MonoBehaviour
 {
-    public GameObject AmmoPrefab;
+    public List<GameObject> AmmoPrefabs = new List<GameObject>();
     public GameObject AmmoSpawnPoint;
     public Tower tower;
     private List<EnemyView> L_Enemy => GameController.singleton.L_Enemy;
@@ -54,24 +54,27 @@ public class TowerView : MonoBehaviour
                         }
                     }
 
-                    if (closetsDistance < AttackRange)
+                    if (closetsDistance < AttackRange && closets)
                     {
-                        // атака у нас производится тут. поэтому и сброс таймера тоже тут
+                            // атака у нас производится тут. поэтому и сброс таймера тоже тут
                         timeCalculate = AttackSpeed;
-
                         //closets.TakeDamage(Damage);
-
-                        var obj = Instantiate(AmmoPrefab,AmmoSpawnPoint.transform.position,Quaternion.identity);
-                        obj.GetComponent<AmmoView>().ammo = new Ammo()
+                            
+                            //Допилить весы для рандома типа пуль. Пока что спавниться только 1 тип
+                        var obj = Instantiate(AmmoPrefabs[0] ,AmmoSpawnPoint.transform.position,Quaternion.identity);
+                            
+                            //Временно пока нету весов и инициализации пули при создании
+                        obj.GetComponent<AmmoViewBase>().ammo = new Ammo()
                         {
-                            Type = AmmoTypes.BlackHole,
-                            DamageMultiplayer = 1,
-                            EffectRadius = 5,
-                            EffectTime = 2,
-                            Speed = 10,
                             Target = closets.transform,
-                            Damage = tower.Damage
-                        };
+                            Damage = tower.Damage,
+                            Speed = 10,
+                            DamageMultiplier = 1.5f,
+                            EffectDamage = 2,
+                            EffectRadius = 5,
+                            EffectTime = 2
+                        }; //Временно пока нету весов и инициализации пули при создании
+
                     }
                 }
             } //Tower logic end

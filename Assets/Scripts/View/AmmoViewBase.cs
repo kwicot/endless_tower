@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Model;
 
@@ -37,5 +38,10 @@ public class AmmoViewBase : MonoBehaviour
         var obj = collision.gameObject.GetComponent<EnemyView>();
         if(obj != null)
         EnemyHit(obj);
+    }
+
+    private void OnDestroy()
+    {
+        enemyViews.Clear();
     }
 }

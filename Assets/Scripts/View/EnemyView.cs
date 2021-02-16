@@ -48,6 +48,7 @@ public class EnemyView : MonoBehaviour
         Debug.Log("Enemy HP= " + enemy.HP);
     }
 
+    
     public void StartIceEffect(float time,float damage)
     {
         StartCoroutine(IceEffect(time, damage));
@@ -57,6 +58,7 @@ public class EnemyView : MonoBehaviour
     {
         StartCoroutine(FireEffect(time, damage));
     }
+    
     IEnumerator IceEffect(float time, float damage)
     {
         Debug.Log("Enemy ice logic start");
@@ -66,6 +68,7 @@ public class EnemyView : MonoBehaviour
         {
             TakeDamage(damage);
             time -= Time.deltaTime;
+            time = ControlCoroutine(time);
             Debug.Log("Enemy ice logic");
             yield return new WaitForFixedUpdate();
         }
@@ -78,7 +81,13 @@ public class EnemyView : MonoBehaviour
         {
             TakeDamage(damage);
             time -= Time.deltaTime;
+            time = ControlCoroutine(time);
             yield return new WaitForFixedUpdate();
         }
+    }
+
+    private float ControlCoroutine(float time)
+    {
+        return (enemy.HP <= 0) ? 0 : time;
     }
 }

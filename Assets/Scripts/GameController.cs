@@ -45,13 +45,23 @@ public class GameController : MonoBehaviour
     public SettingWave SettingWave = new SettingWave();
     private GameDifficult gameDifficult = GameDifficult.Easy;
     
-
+    public static string[] listNameTimer = {"Orange", "Red", "Blue", "Green"};
+    
     public readonly Dictionary<string, int> koeffChange = new Dictionary<string, int>()
     {
         {"Red", 25 },
         {"Green", 100 },
         {"Blue", 1000 }
-    };  
+    };
+    
+    public readonly Dictionary<string, int> baseCostFabric = new Dictionary<string, int>()
+    {
+        {"Orange", 1 },
+        {"Red", 25 },
+        {"Green", 100 },
+        {"Blue", 1000 }
+    };
+    
     
     public Dictionary<string, ParameterVar> nameToValues = new Dictionary<string, ParameterVar>()
     {
@@ -268,7 +278,7 @@ public class GameController : MonoBehaviour
 
     public void Save()
     {
-        // TODO: переделать чтобы брало беспосредственно из сейва
+        // TODO: переделать чтобы брало непосредственно из сейва
         // сохраняем текущее состояние таймеров
         factory.SaveData();
         
@@ -285,10 +295,8 @@ public class GameController : MonoBehaviour
         if (isNew)
         {
             // инициализируем все значения 
-            // foreach (var nameA in nameToAction)
             foreach (var nameA in nameToValues)
             {
-                // Init(nameA.Key, nameA.Value.Improvement, true);
                 Init(nameA.Key, true);
             }
         }
@@ -298,24 +306,76 @@ public class GameController : MonoBehaviour
             var keyGlobal = GameState.global.param.Keys.ToList();
             foreach (var key in keyGlobal)
             {
-                // if (nameToAction.TryGetValue(key, out ParametrVariables action))
-                // {
-                    // Init(key, action.Improvement, false);
-                    Init(key, false);
-                // }
+                Init(key, false);
             }
-            
-            factory.LoadData();
+        }      
+        
+        InitFabric();
+        factory.LoadData(isNew);
+    }
+
+    private void InitFabric()
+    {
+        if (GameState.Fabric == null)
+            GameState.Fabric = new Fabric();
+        
+        GameState.Fabric.InitDefault();
+    }
+
+    public int GetCostTimerLevel(string resources)
+    {
+        int result = 0;
+        int baseValue = 2;
+
+        // current level
+        if (GameState.Fabric.TimerLevels.TryGetValue(resources, out var level))
+        {
+            result = baseValue * level;
         }
 
-        if (GameState.FactoryTimers == null || GameState.FactoryTimers.Count == 0)
+        return result;
+    }
+
+    public int GetCostNew(string resources)
+    {
+        int baseValue = 2;
+
+        baseCostFabric.TryGetValue(resources, out baseValue);
+
+        return baseValue;
+    }
+
+    public void UpTimerLevel(string resources)
+    {
+        // current level
+        if (GameState.Fabric.TimerLevels.ContainsKey(resources))
         {
-            // 
-            factory.InitDefault();
+            if (GameState.Fabric.TimerLevels[resources] == 0)
+            {
+                factory.InitByName(resources);
+                factory.SaveData();
+            }
+
+            GameState.Fabric.TimerLevels[resources]++;
+        }
+        else
+        {
+            GameState.Fabric.TimerLevels[resources] = 1;
         }
     }
 
-    
+    public FactoryTimer GetTimerByName(string nameElement)
+    {
+        foreach (var timer in GameState.Fabric?.FactoryTimers)
+        {
+            if (timer.Resource == nameElement)
+                return timer;
+        }
+
+        return null;
+    }
+
+
     /// <summary>
     /// Мы можем купить или нет?
     /// </summary>
@@ -332,6 +392,11 @@ public class GameController : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Покупаем
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <param name="nameElement"></param>
     public void Buy(float amount, string nameElement = "Orange")
     {
         if (GameState.Money.TryGetValue(nameElement, out var value))
@@ -427,7 +492,7 @@ public class GameController : MonoBehaviour
         else if (index == 0)
         {
             SceneManager.LoadScene(index);
-            factory.LoadData();
+            factory.LoadData(false);
         }
         else
         {

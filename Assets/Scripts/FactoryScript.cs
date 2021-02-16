@@ -9,10 +9,10 @@ public class FactoryScript : MonoBehaviour
     public float OrangeTimeMax;
     public float MaxTimer = 24 * 60 * 60;
     public int OrangeReward;
-    public FactoryTimer OrangeTimer;
-    public FactoryTimer RedTimer;
-    public FactoryTimer BlueTimer;
-    public FactoryTimer GreenTimer;
+    public FactoryTimer OrangeTimer = null;
+    public FactoryTimer RedTimer = null;
+    public FactoryTimer BlueTimer = null;
+    public FactoryTimer GreenTimer = null;
 
     //
     public Transform pnTimer;
@@ -33,6 +33,43 @@ public class FactoryScript : MonoBehaviour
         }
     }
 
+    public void InitByName(string nameElement)
+    {
+        if (nameElement == "Red")
+        {
+            RedTimer = new FactoryTimer()
+            {
+                Seconds = MaxTimer, 
+                MaxSeconds = MaxTimer, 
+                Resource = "Red", 
+                Reward = 1
+            };
+            RedTimer.Init();
+        }
+        else if (nameElement == "Blue")
+        {
+            BlueTimer = new FactoryTimer()
+            {
+                Seconds = MaxTimer, 
+                MaxSeconds = MaxTimer, 
+                Resource = "Blue", 
+                Reward = 1
+            };
+            BlueTimer.Init();
+        }
+        else if (nameElement == "Green")
+        {
+            GreenTimer = new FactoryTimer()
+            {
+                Seconds = MaxTimer,
+                MaxSeconds = MaxTimer, 
+                Resource = "Green", 
+                Reward = 1
+            };
+            GreenTimer.Init();
+        }
+    }
+
     public void InitDefault()
     {
         OrangeTimer = new FactoryTimer()
@@ -44,38 +81,38 @@ public class FactoryScript : MonoBehaviour
         };
         OrangeTimer.Init();
         
-        RedTimer = new FactoryTimer()
-        {
-            Seconds = MaxTimer, 
-            MaxSeconds = MaxTimer, 
-            Resource = "Red", 
-            Reward = 1
-        };
-        RedTimer.Init();
+        // RedTimer = new FactoryTimer()
+        // {
+        //     Seconds = MaxTimer, 
+        //     MaxSeconds = MaxTimer, 
+        //     Resource = "Red", 
+        //     Reward = 1
+        // };
+        // RedTimer.Init();
+        //
+        // BlueTimer = new FactoryTimer()
+        // {
+        //     Seconds = MaxTimer, 
+        //     MaxSeconds = MaxTimer, 
+        //     Resource = "Blue", 
+        //     Reward = 1
+        // };
+        // BlueTimer.Init();
+        //
+        // GreenTimer = new FactoryTimer()
+        // {
+        //     Seconds = MaxTimer,
+        //     MaxSeconds = MaxTimer, 
+        //     Resource = "Green", 
+        //     Reward = 1
+        // };
+        // GreenTimer.Init();
         
-        BlueTimer = new FactoryTimer()
-        {
-            Seconds = MaxTimer, 
-            MaxSeconds = MaxTimer, 
-            Resource = "Blue", 
-            Reward = 1
-        };
-        BlueTimer.Init();
-        
-        GreenTimer = new FactoryTimer()
-        {
-            Seconds = MaxTimer,
-            MaxSeconds = MaxTimer, 
-            Resource = "Green", 
-            Reward = 1
-        };
-        GreenTimer.Init();
-        
-        GameController.GameState.FactoryTimers = new List<FactoryTimer>();
-        GameController.GameState.FactoryTimers.Add(OrangeTimer);
-        GameController.GameState.FactoryTimers.Add(RedTimer);
-        GameController.GameState.FactoryTimers.Add(BlueTimer);
-        GameController.GameState.FactoryTimers.Add(GreenTimer);
+        // GameController.GameState.Fabric.FactoryTimers = new List<FactoryTimer>();
+        GameController.GameState.Fabric.FactoryTimers.Add(OrangeTimer);
+        // GameController.GameState.Fabric.FactoryTimers.Add(RedTimer);
+        // GameController.GameState.Fabric.FactoryTimers.Add(BlueTimer);
+        // GameController.GameState.Fabric.FactoryTimers.Add(GreenTimer);
     }
 
     public static void AddReward(string Name, float count)
@@ -85,61 +122,82 @@ public class FactoryScript : MonoBehaviour
 
     public void SaveData()
     {
-        GameController.GameState.FactoryTimers.Clear();
-        GameController.GameState.FactoryTimers.Add(OrangeTimer);
-        GameController.GameState.FactoryTimers.Add(RedTimer);
-        GameController.GameState.FactoryTimers.Add(BlueTimer);
-        GameController.GameState.FactoryTimers.Add(GreenTimer);
+        GameController.GameState.Fabric.FactoryTimers.Clear();
+        
+        if (OrangeTimer != null)
+            GameController.GameState.Fabric.FactoryTimers.Add(OrangeTimer);
+        
+        if (RedTimer != null)
+            GameController.GameState.Fabric.FactoryTimers.Add(RedTimer);
+        
+        if (BlueTimer != null)
+            GameController.GameState.Fabric.FactoryTimers.Add(BlueTimer);
+        
+        if (GreenTimer != null)
+            GameController.GameState.Fabric.FactoryTimers.Add(GreenTimer);
     }
     
-    public void LoadData()
+    public void LoadData(bool isNew)
     {
-        foreach (var timer in GameController.GameState.FactoryTimers)
+        if (GameController.GameState.Fabric.FactoryTimers.Count == 0)
+        {
+            InitDefault();
+        }
+
+        foreach (var timer in GameController.GameState.Fabric.FactoryTimers)
         {
             if (timer == null) continue;
             
             if (timer.Resource == "Orange")
             {
-                OrangeTimer = new FactoryTimer()
-                {
-                    Seconds = timer.Seconds,
-                    MaxSeconds = timer.MaxSeconds,
-                    Resource = timer.Resource,
-                    Reward = timer.Reward
-                };
+                // OrangeTimer = new FactoryTimer()
+                // {
+                //     Seconds = timer.Seconds,
+                //     MaxSeconds = timer.MaxSeconds,
+                //     Resource = timer.Resource,
+                //     Reward = timer.Reward
+                // };
+                // OrangeTimer.Init();
+                OrangeTimer = timer;
                 OrangeTimer.Init();
             }
             else if (timer.Resource == "Red")
             {
-                RedTimer = new FactoryTimer()
-                {
-                    Seconds = OrangeTimeMax, 
-                    MaxSeconds = OrangeTimeMax, 
-                    Resource = "Red", 
-                    Reward = OrangeReward
-                };
+                // RedTimer = new FactoryTimer()
+                // {
+                //     Seconds = OrangeTimeMax, 
+                //     MaxSeconds = OrangeTimeMax, 
+                //     Resource = "Red", 
+                //     Reward = OrangeReward
+                // };
+                // RedTimer.Init();
+                RedTimer = timer;
                 RedTimer.Init();
             }
             else if (timer.Resource == "Blue")
             {
-                BlueTimer = new FactoryTimer()
-                {
-                    Seconds = OrangeTimeMax, 
-                    MaxSeconds = OrangeTimeMax, 
-                    Resource = "Blue", 
-                    Reward = OrangeReward
-                };
+                // BlueTimer = new FactoryTimer()
+                // {
+                //     Seconds = OrangeTimeMax, 
+                //     MaxSeconds = OrangeTimeMax, 
+                //     Resource = "Blue", 
+                //     Reward = OrangeReward
+                // };
+                // BlueTimer.Init();
+                BlueTimer = timer;
                 BlueTimer.Init();
             }
             else if (timer.Resource == "Green")
             {
-                GreenTimer = new FactoryTimer()
-                {
-                    Seconds = OrangeTimeMax, 
-                    MaxSeconds = OrangeTimeMax, 
-                    Resource = "Green", 
-                    Reward = OrangeReward
-                };
+                // GreenTimer = new FactoryTimer()
+                // {
+                //     Seconds = OrangeTimeMax, 
+                //     MaxSeconds = OrangeTimeMax, 
+                //     Resource = "Green", 
+                //     Reward = OrangeReward
+                // };
+                // GreenTimer.Init();
+                GreenTimer = timer;
                 GreenTimer.Init();
             }
         }
@@ -224,7 +282,8 @@ public class FactoryTimer
     
     public string GetTimeLeft()
     {
-        string res = "H-" + Hour.ToString() + " M-" + Minnutes.ToString() + " S-" + Sec.ToString();
+        string res = $"{Hour}:{Minnutes}:{Sec}";
+        // string res = $"H-{Hour} M-{Minnutes} S-{Sec}";
         return res;
     }
 }

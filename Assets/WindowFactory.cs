@@ -13,25 +13,53 @@ public class WindowFactory : UIElement
         // create prefab
         if (HasPrefab("FabricTimer"))
         {
-            // orange
-            var element = Instantiate(GetPrefab("FabricTimer"), content);
-            var ft = element.GetComponent<FabricTimer>();
-            if (ft) ft.Init(GameController.singleton.factory.OrangeTimer);
+            foreach (var name in GameController.listNameTimer)
+            {
+                var element = Instantiate(GetPrefab("FabricTimer"), content);
+                var ft = element.GetComponent<FabricTimer>();
+                
+                var timer = GameController.singleton.GetTimerByName(name);
+                if (timer != null)
+                {
+                    
+                    if (timer.Resource == "Orange")
+                    {
+                        if (ft) ft.Init(GameController.singleton.factory.OrangeTimer);
+                    }
+                    else if (timer.Resource == "Red")
+                    {
+                        if (ft) ft.Init(GameController.singleton.factory.RedTimer);
+                    }
+                    else if (timer.Resource == "Blue")
+                    {
+                        if (ft) ft.Init(GameController.singleton.factory.BlueTimer);
+                    }
+                    else if (timer.Resource == "Green")
+                    {
+                        if (ft) ft.Init(GameController.singleton.factory.GreenTimer);
+                    }
+                }
+                else
+                {
+                    if (ft)
+                    {
+                        ft.InitEmpty(name);
+                        ft.actionEnable -= OnEnable;
+                        ft.actionEnable += OnEnable;
+                    }
+                }
+            }
             
-            // red
-            element = Instantiate(GetPrefab("FabricTimer"), content);
-            ft = element.GetComponent<FabricTimer>();
-            if (ft) ft.Init(GameController.singleton.factory.RedTimer);
             
-            // blue
-            element = Instantiate(GetPrefab("FabricTimer"), content);
-            ft = element.GetComponent<FabricTimer>();
-            if (ft) ft.Init(GameController.singleton.factory.BlueTimer);
+
             
-            // green
-            element = Instantiate(GetPrefab("FabricTimer"), content);
-            ft = element.GetComponent<FabricTimer>();
-            if (ft) ft.Init(GameController.singleton.factory.GreenTimer);
+            
+            
+            
+            
+            
+            
+            
         }
     }
 

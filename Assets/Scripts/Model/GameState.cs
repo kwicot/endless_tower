@@ -18,7 +18,8 @@ public class GameState
     [NonSerialized]public UFParam current = new UFParam();
 
     public Dictionary<string, float> Money = new Dictionary<string, float>();
-    public List<FactoryTimer> FactoryTimers = new List<FactoryTimer>();
+    //public List<FactoryTimer> FactoryTimers = new List<FactoryTimer>();
+    public Fabric Fabric = new Fabric();
 
     public void Init()
     {
@@ -42,7 +43,7 @@ public class GameState
         }
         global.Init();
         
-        if (Money == null)
+        if (Money == null || Money.Count == 0)
             Money = new Dictionary<string, float>()
             {
                 {"White",0 },
@@ -53,6 +54,35 @@ public class GameState
                 {"Crystal", 0 }
             };
         
+        
+    }
+}
+
+[System.Serializable]
+public class Fabric
+{
+    public Dictionary<string, int> TimerLevels = new Dictionary<string, int>();
+    public List<FactoryTimer> FactoryTimers = new List<FactoryTimer>();
+
+    public void InitDefault()
+    {
+        if (FactoryTimers == null)
+            FactoryTimers = new List<FactoryTimer>();
+
+        if (TimerLevels == null)
+            TimerLevels = new Dictionary<string, int>();
+
+        if (TimerLevels.Count == 0)
+        {
+            TimerLevels.Add("Orange", 1);
+            TimerLevels.Add("Red", 0);
+            TimerLevels.Add("Green", 0);
+            TimerLevels.Add("Blue", 0);
+        }
+    }
+
+    public void Init()
+    {
         
     }
 }

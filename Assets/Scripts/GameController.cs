@@ -558,37 +558,39 @@ public class GameController : MonoBehaviour
         EnemyType type = enemy.SOEnemy.Type;
         L_Enemy.Remove(enemy);
         if (L_Enemy.Count == 0) spawner.CanTime = true;
+            //TODO Вознаграждение для каждого типо врагов
+        /*
+        switch (type)
+        {
+            case EnemyType.Default: AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff); break;
+            case EnemyType.Fast:
+                {
+                    AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
+                    AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
+                } break;
+            case EnemyType.Fat:
+                {
+                    AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
+                    AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
+                }
+                break;
+            case EnemyType.MiniBoss:
+                {
+                    AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
+                    AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
+                }
+                break;
+            case EnemyType.Boss:
+                {
+                    AddReward("Crystal", EnemyRewardCrystal * CrystalBonusPerKill);
+                    AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
+                    AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
+                }
+                break;
 
-        //switch (type)
-        //{
-        //    case EnemyType.Default: AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff); break;
-        //    case EnemyType.Fast:
-        //        {
-        //            AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
-        //            AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
-        //        } break;
-        //    case EnemyType.Fat:
-        //        {
-        //            AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
-        //            AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
-        //        }
-        //        break;
-        //    case EnemyType.MiniBoss:
-        //        {
-        //            AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
-        //            AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
-        //        }
-        //        break;
-        //    case EnemyType.Boss:
-        //        {
-        //            AddReward("Crystal", EnemyRewardCrystal * CrystalBonusPerKill);
-        //            AddReward("Orange", EnemyRewardOrange * OrangeBonusPerKill * SettingWave.RewardCoeff);
-        //            AddReward("White", EnemyRewardWhite * WhiteBonusPerKill * SettingWave.RewardCoeff);
-        //        }
-        //        break;
-
-        //}
-        //Вознаграждение
+        }
+             Вознаграждение   */ 
+        
     }
 
     void AddReward(string Name, float Count)

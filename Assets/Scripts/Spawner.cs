@@ -14,8 +14,9 @@ public class Spawner : MonoBehaviour
     private GameController GC => GameController.singleton;
 
 
+    //TODO количество врагов зависит от волны
     public int EnemyPerWave => GC.EnemyPerWave;
-    public int BossWave { get; set; }
+    public int BossWave => GC.SettingWave.BossInWaves;
     public int CurrentWave { get; private set; }
     public float PauseBetweenWave => GC.WaveInterval;
     public float SpawnInterval => GC.SpawnInterval;
@@ -116,37 +117,29 @@ public class Spawner : MonoBehaviour
 
     IEnumerator NewWave()
     {
+        Debug.Log(GC.GameDifficult);
         CurrentWave++;
         Timer = 0;
         CanTime = false;
-        
-        for(int i = 0; i< EnemyPerWave ; i++)
+
+        for (int i = 0; i < EnemyPerWave; i++)
         {
-            // if (!IsNewSpawner)
-            // { //Old spawner
-            //     var randomPoint = UnityEngine.Random.Range(0, L_SpawnPoints.Count);
-            //     var randomEnemy = UnityEngine.Random.Range(0, EnemiesPrefab.Length - 2); // -2 boss
-            //     var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], L_SpawnPoints[randomPoint], Quaternion.identity);
-            //     obj.Init();
-            //     GameController.singleton.L_Enemy.Add(obj);
-            // }
-            // else
-            // {  //New spawner
-                var randomEnemy = _enemyList.Count == 1 ? _enemyList[0] : Utils.GetRandomOnWeight(weight);
-                var randomPoint = GetRandomPoint();
-                var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], randomPoint, Quaternion.identity);
-                obj.Init();
-                GC.L_Enemy.Add(obj);
-            // }
+
+            var randomEnemy = _enemyList.Count == 1 ? _enemyList[0] : Utils.GetRandomOnWeight(weight);
+            var randomPoint = GetRandomPoint();
+            var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], randomPoint, Quaternion.identity);
+            obj.Init();
+            GC.L_Enemy.Add(obj);
 
 
-            
+
+
             //Debug.Log("Green progress bar fill= " + i / EnemyPerWave);
             yield return new WaitForSeconds(SpawnInterval);
         }
 
         // boss
-        if (CurrentWave % GC.SettingWave.BossInWaves == 0)
+        if (CurrentWave % BossWave == 0)
         {
             var randomPoint = GetRandomPoint();
             var obj = Instantiate<EnemyView>(EnemiesPrefab[_enemyList.Count - 1], randomPoint, Quaternion.identity);

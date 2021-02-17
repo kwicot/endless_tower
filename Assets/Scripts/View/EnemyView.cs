@@ -45,7 +45,7 @@ public class EnemyView : MonoBehaviour
             GameController.singleton.EnemyKilled(this);
             Destroy(gameObject);
         }
-        Debug.Log("Enemy HP= " + enemy.HP);
+        //Debug.Log("Enemy HP= " + enemy.HP);
     }
 
     

@@ -57,7 +57,7 @@ public class TowerView : MonoBehaviour
                     if (closetsDistance < AttackRange && closets)
                     {
                             // атака у нас производится тут. поэтому и сброс таймера тоже тут
-                        timeCalculate = AttackSpeed;
+                        timeCalculate = 1 / AttackSpeed;
                         //closets.TakeDamage(Damage);
                             
                             //Допилить весы для рандома типа пуль. Пока что спавниться только 1 тип

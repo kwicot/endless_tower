@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Model;
@@ -91,6 +92,7 @@ public class TowerView : MonoBehaviour
         if (tower.HP <= 0f)
         {
             Time.timeScale = 0f;
+            GameController.singleton.EndRound();
         }
     }
     

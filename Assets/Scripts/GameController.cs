@@ -573,7 +573,7 @@ public class GameController : MonoBehaviour
             
         //TODO Вознаграждение для каждого типо врагов
 
-        Points++;
+        Points += enemy.SOEnemy.HP;
 
         /*
         switch (type)

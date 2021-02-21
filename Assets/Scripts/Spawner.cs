@@ -118,23 +118,25 @@ public class Spawner : MonoBehaviour
     IEnumerator NewWave()
     {
         Debug.Log(GC.GameDifficult);
-        CurrentWave++;
         Timer = 0;
         CanTime = false;
 
-        for (int i = 0; i < EnemyPerWave; i++)
+        float weightInWave = 20; // TODO: взять из сложности
+        for (int i = 0; i < CurrentWave; i++)
         {
+            weightInWave *= 1.23f; // TODO: взять из сложности
+        }
+        CurrentWave++;
 
+        while (weightInWave > 0)
+        {
             var randomEnemy = _enemyList.Count == 1 ? _enemyList[0] : Utils.GetRandomOnWeight(weight);
             var randomPoint = GetRandomPoint();
             var obj = Instantiate<EnemyView>(EnemiesPrefab[randomEnemy], randomPoint, Quaternion.identity);
             obj.Init();
+            weightInWave -= obj.SOEnemy.HP;
             GC.L_Enemy.Add(obj);
-
-
-
-
-            //Debug.Log("Green progress bar fill= " + i / EnemyPerWave);
+            
             yield return new WaitForSeconds(SpawnInterval);
         }
 

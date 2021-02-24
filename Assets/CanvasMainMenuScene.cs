@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CanvasMainMenuScene : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform pnTimer;
+    private void Start()
     {
-        
+        GameController.singleton.canvasMainMenuScene = this;
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void OnEnable()
     {
-        
+        Debug.Log("OnEnable called");
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("OnSceneLoaded: " + scene.name);
+        Debug.Log(mode);
+
+        GameController.singleton.state = State.MainMenu;
+        Time.timeScale = 1;
     }
 }

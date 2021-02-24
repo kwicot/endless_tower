@@ -658,6 +658,7 @@ GameObject:
   - component: {fileID: 292898966}
   - component: {fileID: 292898965}
   - component: {fileID: 292898964}
+  - component: {fileID: 292898967}
   m_Layer: 5
   m_Name: pnDifficult
   m_TagString: Untagged
@@ -754,6 +755,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292898962}
   m_CullTransparentMesh: 1
+--- !u!114 &292898967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292898962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00b3eae3a9beef49af3d2deec021348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons:
+  - {fileID: 896787589}
+  - {fileID: 1168486136}
+  - {fileID: 703981129}
+  - {fileID: 1800895279}
+  - {fileID: 1025110888}
 --- !u!1 &337474900
 GameObject:
   m_ObjectHideFlags: 0
@@ -1986,19 +2005,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 703981131}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1605649722}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: SetDifficeltAndStart
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &703981130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2335,6 +2342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a8efbfb3b3fcf546b6dc7b64ea01e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pnTimer: {fileID: 967159418}
 --- !u!1 &781887115
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,19 +2608,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 896787591}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1605649722}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: SetDifficeltAndStart
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &896787590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2934,19 +2930,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1025110890}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1605649722}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: SetDifficeltAndStart
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1025110889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3311,19 +3295,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1168486138}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1605649722}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: SetDifficeltAndStart
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1168486137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4116,19 +4088,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1800895281}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1605649722}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: SetDifficeltAndStart
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1800895280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4888,7 +4848,7 @@ PrefabInstance:
     - target: {fileID: 314706817, guid: eb30a9c18b771504bba70c2cd6b80392, type: 3}
       propertyPath: pnTimer
       value: 
-      objectReference: {fileID: 967159418}
+      objectReference: {fileID: 0}
     - target: {fileID: 3430937361562283868, guid: eb30a9c18b771504bba70c2cd6b80392, type: 3}
       propertyPath: m_RootOrder
       value: 2

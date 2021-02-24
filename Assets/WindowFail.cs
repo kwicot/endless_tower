@@ -16,13 +16,15 @@ public class WindowFail : MonoBehaviour
         btTown?.onClick.RemoveAllListeners();
         btTown?.onClick.AddListener(() =>
         {
+            GameController.singleton.DestroyAndClearEnemyList();
             GameController.singleton.LoadLevel(0);
         });
         
         btAgain?.onClick.RemoveAllListeners();
         btAgain?.onClick.AddListener(() =>
         {
-          GameController.singleton.LoadLevel(1);  
+            GameController.singleton.DestroyAndClearEnemyList();
+            GameController.singleton.LoadLevel(1);  
         });
     }
 

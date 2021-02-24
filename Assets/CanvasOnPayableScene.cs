@@ -8,7 +8,7 @@ public class CanvasOnPayableScene : MonoBehaviour
     public Transform pnWindowFail;
     public Transform[] objects;
 
-    private void Awake()
+    private void Start()
     {
         GameController.singleton.canvasOnPayableScene = this;
     }

@@ -1,3 +1,4 @@
+using System;
 using Model;
 using UnityEngine;
 using System.Collections;
@@ -89,5 +90,11 @@ public class EnemyView : MonoBehaviour
     private float ControlCoroutine(float time)
     {
         return (enemy.HP <= 0) ? 0 : time;
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+        target = null;
     }
 }

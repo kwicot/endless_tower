@@ -65,6 +65,182 @@ public class GameController : MonoBehaviour
     
     public Dictionary<string, ParameterVar> nameToValues = new Dictionary<string, ParameterVar>()
     {
+        {"CrystalChancePerWave", new ParameterVar()
+        {
+            NameElement = "CrystalChancePerWave",
+            baseParameter = 0f,
+            koefParameter = 0.1f,
+            baseCost = 60f,
+            koefCost = 1.9f
+        }},
+        {"CrystalChancePerKill", new ParameterVar()
+        {
+            NameElement = "CrystalChancePerKill",
+            baseParameter = 0f,
+            koefParameter = 0.02f,
+            baseCost = 40f,
+            koefCost = 1.9f
+        }},
+        {"OrangeMoneyBonusPerWave", new ParameterVar()
+        {
+            NameElement = "OrangeMoneyBonusPerWave",
+            baseParameter = 0f,
+            koefParameter = 1f,
+            baseCost = 23f,
+            koefCost = 1.6f
+        }},
+        {"OrangeMoneyBonusPerKill", new ParameterVar()
+        {
+            NameElement = "OrangeMoneyBonusPerKill",
+            baseParameter = 0f,
+            koefParameter = 1f,
+            baseCost = 20f,
+            koefCost = 1.6f
+        }},
+        {"WhiteMoneyBonusPerWave", new ParameterVar()
+        {
+            NameElement = "WhiteMoneyBonusPerWave",
+            baseParameter = 0f,
+            koefParameter = 2f,
+            baseCost = 9f,
+            koefCost = 1.5f
+        }},
+        {"WhiteMoneyBonusPerKill", new ParameterVar()
+        {
+            NameElement = "WhiteMoneyBonusPerKill",
+            baseParameter = 0f,
+            koefParameter = 1f,
+            baseCost = 6f,
+            koefCost = 1.5f
+        }},
+        {"ExplosiveChance", new ParameterVar()
+        {
+            NameElement = "ExplosiveChance",
+            baseParameter = 0f,
+            koefParameter = 1f,
+            baseCost = 20f,
+            koefCost = 1.5f
+        }},
+        {"DamageAuraEffect", new ParameterVar()
+        {
+            NameElement = "DamageAuraEffect",
+            baseParameter = 0.5f,
+            koefParameter = 1.1f,
+            baseCost = 16f,
+            koefCost = 1.5f
+        }},
+        {"DamageAura", new ParameterVar()
+        {
+            NameElement = "DamageAura",
+            baseParameter = 0f,
+            koefParameter = 0.1f,
+            baseCost = 10f,
+            koefCost = 1.5f
+        }},
+        {"DefenseAuraEffect", new ParameterVar()
+        {
+            NameElement = "DefenseAuraEffect",
+            baseParameter = 5f,
+            koefParameter = 1f,
+            baseCost = 12f,
+            koefCost = 1.5f
+        }},
+        {"DefenseAuraRadius", new ParameterVar()
+        {
+            NameElement = "DefenseAuraRadius",
+            baseParameter = 0f,
+            koefParameter = 0.1f,
+            baseCost = 10f,
+            koefCost = 1.5f
+        }},
+        {"BlockChance", new ParameterVar()
+        {
+            NameElement = "BlockChance",
+            baseParameter = 0f,
+            koefParameter = 1f,
+            baseCost = 8f,
+            koefCost = 1.5f
+        }},
+        {"IceAmmoEffectRadius", new ParameterVar()
+        {
+            NameElement = "IceAmmoEffectRadius",
+            baseParameter = 0.1f,
+            koefParameter = 0.1f,
+            baseCost = 6f,
+            koefCost = 1.6f
+        }},
+        {"IceAmmoEffect", new ParameterVar()
+        {
+            NameElement = "IceAmmoEffect",
+            baseParameter = 10f,
+            koefParameter = 1f,
+            baseCost = 8f,
+            koefCost = 1.5f
+        }},
+        {"IceAmmoChance", new ParameterVar()
+        {
+            NameElement = "IceAmmoChance",
+            baseParameter = 0f,
+            koefParameter = 1f,
+            baseCost = 10f,
+            koefCost = 1.5f
+        }},
+        {"FireAmmoDamageEffect", new ParameterVar()
+        {
+            NameElement = "FireAmmoDamageEffect",
+            baseParameter = 20f,
+            koefParameter = 1.15f,
+            baseCost = 6f,
+            koefCost = 1.8f
+        }},
+        {"FireAmmoChance", new ParameterVar()
+        {
+            NameElement = "FireAmmoChance",
+            baseParameter = 0f,
+            koefParameter = 1f,
+            baseCost = 10f,
+            koefCost = 1.5f
+        }},
+        {"RapidFireTime", new ParameterVar()
+        {
+            NameElement = "RapidFireTime",
+            baseParameter = 1f,
+            koefParameter = 0.1f,
+            baseCost = 16f,
+            koefCost = 1.5f
+        }},
+        {"RapidFireChance", new ParameterVar()
+        {
+            NameElement = "RapidFireChance",
+            baseParameter = 0f,
+            koefParameter = 1f,
+            baseCost = 10f,
+            koefCost = 1.5f
+        }},
+        {"BounceCount", new ParameterVar()
+        {
+            NameElement = "BounceCount",
+            baseParameter = 2f,
+            koefParameter = 1f,
+            baseCost = 50f,
+            koefCost = 3f
+        }},
+        {"BounceChance", new ParameterVar()
+        {
+            NameElement = "BounceChance",
+            baseParameter = 0f,
+            koefParameter = 1f,
+            baseCost = 16f,
+            koefCost = 1.5f
+        }},
+        {"CriticalChance", new ParameterVar()
+        {
+            NameElement = "CriticalChance",
+            baseParameter = 0f,
+            koefParameter = 1f,
+            baseCost = 10f,
+            koefCost = 1.5f
+        }},
         {"Damage", new ParameterVar()
         {
             NameElement = "Damage",

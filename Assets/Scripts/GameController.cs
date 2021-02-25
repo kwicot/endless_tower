@@ -734,7 +734,18 @@ public class GameController : MonoBehaviour
         EnemyType type = enemy.SOEnemy.Type;
         L_Enemy.Remove(enemy);
         if (L_Enemy.Count == 0) spawner.CanTime = true;
-            //TODO Вознаграждение для каждого типо врагов
+        
+        //TODO Добавить префабы монет
+        //Временно
+        GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        obj.AddComponent<MoneyView>();
+        
+        //Временно
+
+
+
+
+        //TODO Вознаграждение для каждого типо врагов
         /*
         switch (type)
         {
@@ -765,8 +776,8 @@ public class GameController : MonoBehaviour
                 break;
 
         }
-             Вознаграждение   */ 
-        
+             Вознаграждение   */
+
     }
 
     void AddReward(string Name, float Count)

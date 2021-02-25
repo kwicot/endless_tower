@@ -41,6 +41,9 @@ public class GameController : MonoBehaviour
     public TowerView tower;
     public Spawner spawner;
     public FactoryScript factory;
+    public CanvasOnPayableScene canvasOnPayableScene;
+    public CanvasMainMenuScene canvasMainMenuScene;
+    public float Points;
     public List<EnemyView> L_Enemy = new List<EnemyView>();
     public SettingWave SettingWave = new SettingWave();
     private GameDifficult gameDifficult = GameDifficult.Easy;
@@ -354,6 +357,7 @@ public class GameController : MonoBehaviour
     
     
     /// <summary>
+    /// Universal - global+local
     /// key - nameElement
     /// b   - base
     /// k   - koef
@@ -381,6 +385,9 @@ public class GameController : MonoBehaviour
         return v;
     };
     
+    /// <summary>
+    /// Local
+    /// </summary>
     static System.Func<string, float, float, int ,float> L = (key, b, k, a) =>
     {
         float v = b;    // base
@@ -728,24 +735,36 @@ public class GameController : MonoBehaviour
                 }
             } //Enemy logic end
     }
+
+    public void EndRound()
+    {
+        canvasOnPayableScene.Activate("pnWindowFail", true);
+    }
+
+    public void DestroyAndClearEnemyList()
+    {
+        foreach (var enemyView in L_Enemy)
+        {
+            if (enemyView == null) continue;
+            DestroyImmediate(enemyView.gameObject);
+        }
+        
+        L_Enemy.Clear();
+    }
     
     public void EnemyKilled(EnemyView enemy)
     {
         EnemyType type = enemy.SOEnemy.Type;
         L_Enemy.Remove(enemy);
-        if (L_Enemy.Count == 0) spawner.CanTime = true;
-        
-        //TODO Добавить префабы монет
-        //Временно
+        if (L_Enemy.Count == 0) 
+            spawner.CanTime = true;
+            
+        //TODO Вознаграждение для каждого типо врагов
+
+        Points += enemy.SOEnemy.HP;
+
         GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
         obj.AddComponent<MoneyView>();
-        
-        //Временно
-
-
-
-
-        //TODO Вознаграждение для каждого типо врагов
         /*
         switch (type)
         {
@@ -776,8 +795,8 @@ public class GameController : MonoBehaviour
                 break;
 
         }
-             Вознаграждение   */
-
+             Вознаграждение   */ 
+        
     }
 
     void AddReward(string Name, float Count)

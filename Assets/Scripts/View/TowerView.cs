@@ -22,26 +22,29 @@ public class TowerView : MonoBehaviour
     private float DefenseAura => GameController.GameState.current.Get("DefenseAura");
     private float DefenseAuraRadius => GameController.GameState.current.Get("DefenseAuraRadius");
     private float BlockChance => GameController.GameState.current.Get("BlockChance");
-    private float FireAmmoChance => GameController.GameState.current.Get("FireAmmoChance");
     private float RapidFireTime => GameController.GameState.current.Get("RapidFireTime");
     private float RapidFireChance => GameController.GameState.current.Get("RapidFireChance");
-    private float BounceCount => GameController.GameState.current.Get("BounceCount");
-    private float BounceChance => GameController.GameState.current.Get("BounceChance");
+    
     private float CriticalChance => GameController.GameState.current.Get("CriticalChance");
     //private float  => GameController.GameState.current.Get("");
     //private float  => GameController.GameState.current.Get("");
     //private float  => GameController.GameState.current.Get("");
     //private float  => GameController.GameState.current.Get("");
-    //private float  => GameController.GameState.current.Get("");
-    //private float  => GameController.GameState.current.Get("");
-    
-
-    
 
 
+    private Dictionary<int, int> ammoWeight = new Dictionary<int, int>
+    {
+        {0, (int) GameController.GameState.current.Get("IceAmmoChance")},
+        {1, (int) GameController.GameState.current.Get("FireAmmoChance")},
+        {2, (100
+             - (int) GameController.GameState.current.Get("IceAmmoChance")
+             - (int) GameController.GameState.current.Get("FireAmmoChance"))
+        }
+    };
     void Start()
     {
         GameController.singleton.tower = this;
+        RecalcWeight();
     }
     private float timeCalculate = 0.1f;
     private void Update()
@@ -83,15 +86,22 @@ public class TowerView : MonoBehaviour
                         // атака у нас производится тут. поэтому и сброс таймера тоже тут
                         timeCalculate = 1 / AttackSpeed;
                         //closets.TakeDamage(Damage);
-
-                        //Допилить весы для рандома типа пуль. Пока что спавниться только 1 тип
-                        var obj = Instantiate(AmmoPrefabs[0], AmmoSpawnPoint.transform.position, Quaternion.identity);
-
-                        //Временно пока нету весов и инициализации пули при создании
+                        
+                        var randomAmmo = Utils.GetRandomOnWeight(ammoWeight);
+                        var obj = Instantiate(AmmoPrefabs[randomAmmo], AmmoSpawnPoint.transform.position, Quaternion.identity);
+                        Debug.Log(obj);
+                        //Инициализация основных характеристик
+                        //Персональные характеристики инициализируються при в скрипте каждого типа
                         var amm = obj.GetComponent<AmmoViewBase>().ammo;
                         amm.Target = closets.transform;
-                        amm.Damage = tower.Damage;
+                        amm.Damage = Damage;
                         amm.Speed = 10;
+                        amm.BounceChance = GameController.GameState.current.Get("BounceChance");
+                        amm.BounceCount = (int) GameController.GameState.current.Get("BounceCount");
+                        
+                        //TODO сделать обновление весов после покупки улучшения снарядов
+                        RecalcWeight();
+
                     }
                 }
             } //Tower logic end
@@ -110,6 +120,20 @@ public class TowerView : MonoBehaviour
             Time.timeScale = 0f;
             GameController.singleton.EndRound();
         }
+    }
+
+    void RecalcWeight()
+    {
+        ammoWeight.Clear();
+        ammoWeight = new Dictionary<int, int>
+        {
+            {0, (int) GameController.GameState.current.Get("IceAmmoChance")},
+            {1, (int) GameController.GameState.current.Get("FireAmmoChance")},
+            {2, (100
+                 - (int) GameController.GameState.current.Get("IceAmmoChance")
+                 - (int) GameController.GameState.current.Get("FireAmmoChance"))
+            }
+        };
     }
     
     // void OnDrawGizmos()

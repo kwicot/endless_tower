@@ -270,7 +270,7 @@ public class FactoryTimer
         FactoryScript.AddReward(Resource, Reward);
         Seconds = MaxSeconds;
         
-        Debug.Log("Reward- " + GameController.GameState.Money[Resource]);
+        //Debug.Log("Reward- " + GameController.GameState.Money[Resource]);
     }
     
     public void UpdateMaxTime()

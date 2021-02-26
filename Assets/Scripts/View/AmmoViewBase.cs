@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Model;
+using Random = System.Random;
 
 public class AmmoViewBase : MonoBehaviour
 {
@@ -29,7 +30,14 @@ public class AmmoViewBase : MonoBehaviour
 
     protected virtual void EnemyHit(EnemyView enemyView)
     {
-
+        enemyView.TakeDamage(ammo.Damage);
+        if (ammo.BounceChance > 0)
+        {
+            if (UnityEngine.Random.Range(0,100) <= ammo.BounceChance)
+            {
+                //TODO Доделать отскок, рикошет
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

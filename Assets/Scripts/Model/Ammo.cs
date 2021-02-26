@@ -12,5 +12,7 @@ namespace Model
         public float EffectTime;
         public float EffectRadius;
         public float EffectDamage;
+        public float BounceChance;
+        public int BounceCount;
     }
 }

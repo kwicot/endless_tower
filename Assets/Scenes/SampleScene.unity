@@ -394,9 +394,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae8576b36e65d544a8cb72a50991169d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RaycastLayer:
+  RaycastEnemyLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
 --- !u!114 &1150914876 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1150914876, guid: b5d2936a69a83054dbb39779bd7bfdec, type: 3}
@@ -581,7 +581,7 @@ PrefabInstance:
     - target: {fileID: 4925874729106255696, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
       propertyPath: AmmoPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 593878214749118154, guid: 8411c0babcda7d643896aae8be76cb21, type: 3}
+      objectReference: {fileID: 5880295072431174445, guid: 120b2d2dbaeeaab40953288ce0808e98, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 351aa3283f971404fab343bca4a3fb1c, type: 3}
 --- !u!1001 &2901940355345550016

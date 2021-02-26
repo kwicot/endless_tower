@@ -20,6 +20,8 @@ MonoBehaviour:
     EffectTime: 0
     EffectRadius: 0
     EffectDamage: 0
+    BounceChance: 0
+    BounceCount: 0
 --- !u!1001 &4436789091910112670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -73,9 +75,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5880295072431174445, guid: 120b2d2dbaeeaab40953288ce0808e98, type: 3}
       propertyPath: m_Name
-      value: Ammo
+      value: AmmoFire
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -2428709181758724514, guid: 120b2d2dbaeeaab40953288ce0808e98, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 120b2d2dbaeeaab40953288ce0808e98, type: 3}
 --- !u!1 &7784934964392109747 stripped
 GameObject:

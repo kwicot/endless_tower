@@ -44,10 +44,10 @@ public class GameController : MonoBehaviour
     public CanvasOnPayableScene canvasOnPayableScene;
     public CanvasMainMenuScene canvasMainMenuScene;
     public float Points;
-    public List<EnemyView> L_Enemy = new List<EnemyView>();
     public SettingWave SettingWave = new SettingWave();
+    public List<EnemyView> L_Enemy = new List<EnemyView>();
     private GameDifficult gameDifficult = GameDifficult.Easy;
-    
+
     public static string[] listNameTimer = {"Orange", "Red", "Blue", "Green"};
     
     public readonly Dictionary<string, int> koeffChange = new Dictionary<string, int>()

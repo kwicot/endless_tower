@@ -22,9 +22,6 @@ public class TowerView : MonoBehaviour
     private float DefenseAura => GameController.GameState.current.Get("DefenseAura");
     private float DefenseAuraRadius => GameController.GameState.current.Get("DefenseAuraRadius");
     private float BlockChance => GameController.GameState.current.Get("BlockChance");
-    private float IceAmmoEffectRadius => GameController.GameState.current.Get("IceAmmoEffectRadius");
-    private float IceAmmoEffect => GameController.GameState.current.Get("IceAmmoEffect");
-    private float FireAmmoDamageEffect => GameController.GameState.current.Get("FireAmmoDamageEffect");
     private float FireAmmoChance => GameController.GameState.current.Get("FireAmmoChance");
     private float RapidFireTime => GameController.GameState.current.Get("RapidFireTime");
     private float RapidFireChance => GameController.GameState.current.Get("RapidFireChance");
@@ -83,25 +80,18 @@ public class TowerView : MonoBehaviour
 
                     if (closetsDistance < AttackRange && closets)
                     {
-                            // атака у нас производится тут. поэтому и сброс таймера тоже тут
+                        // атака у нас производится тут. поэтому и сброс таймера тоже тут
                         timeCalculate = 1 / AttackSpeed;
                         //closets.TakeDamage(Damage);
-                            
-                            //Допилить весы для рандома типа пуль. Пока что спавниться только 1 тип
-                        var obj = Instantiate(AmmoPrefabs[0] ,AmmoSpawnPoint.transform.position,Quaternion.identity);
-                            
-                            //Временно пока нету весов и инициализации пули при создании
-                        obj.GetComponent<AmmoViewBase>().ammo = new Ammo()
-                        {
-                            Target = closets.transform,
-                            Damage = tower.Damage,
-                            Speed = 10,
-                            DamageMultiplier = 1.5f,
-                            EffectDamage = 2,
-                            EffectRadius = 5,
-                            EffectTime = 2
-                        }; //Временно пока нету весов и инициализации пули при создании
 
+                        //Допилить весы для рандома типа пуль. Пока что спавниться только 1 тип
+                        var obj = Instantiate(AmmoPrefabs[0], AmmoSpawnPoint.transform.position, Quaternion.identity);
+
+                        //Временно пока нету весов и инициализации пули при создании
+                        var amm = obj.GetComponent<AmmoViewBase>().ammo;
+                        amm.Target = closets.transform;
+                        amm.Damage = tower.Damage;
+                        amm.Speed = 10;
                     }
                 }
             } //Tower logic end

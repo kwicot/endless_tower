@@ -5,7 +5,7 @@ using Model;
 
 public class AmmoViewBase : MonoBehaviour
 {
-    public Ammo ammo;
+    public Ammo ammo = new Ammo();
     protected HashSet<EnemyView> enemyViews = new HashSet<EnemyView>();
     protected Rigidbody rb;
     private void Start()
@@ -17,7 +17,6 @@ public class AmmoViewBase : MonoBehaviour
             enemyViews.Add(enemyView);
         }
 
-        //ammo = new Ammo(); //Прикрутить инициализацию стандартных настроек
     }
     void Update()
     {

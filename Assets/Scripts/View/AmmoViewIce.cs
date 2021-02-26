@@ -1,8 +1,14 @@
 using UnityEngine;
 
 public class AmmoViewIce : AmmoViewBase
-{ 
-
+{
+    void Start()
+    {
+        ammo.EffectRadius = GameController.GameState.current.Get("IceAmmoEffectRadius");
+        ammo.EffectDamage = 0;
+        ammo.EffectTime = GameController.GameState.current.Get("IceAmmoEffect");
+        ammo.DamageMultiplier = 1.5f;
+    }
     protected override void EnemyHit(EnemyView enemyView)
     {
         Debug.Log("IceLogic");

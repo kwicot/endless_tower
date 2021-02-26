@@ -1,7 +1,11 @@
 using UnityEngine;
 
 public class AmmoViewBlackHole : AmmoViewBase
-{ 
+{
+    private void Start()
+    {
+        //ammo.DamageMultiplier = GameController.GameState.current.Get("");
+    }
 
     protected override void EnemyHit(EnemyView enemyView)
     {

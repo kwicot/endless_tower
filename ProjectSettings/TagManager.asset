@@ -9,6 +9,9 @@ TagManager:
   - Ammo
   - Enemy
   - SpawnPoint
+  - WhiteMoney
+  - OrangeMoney
+  - CrystalMoney
   layers:
   - Default
   - TransparentFX

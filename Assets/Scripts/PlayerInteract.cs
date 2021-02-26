@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    public LayerMask RaycastLayer;
+    public LayerMask RaycastEnemyLayer;
     private Camera camera;
     
 
@@ -35,7 +35,7 @@ public class PlayerInteract : MonoBehaviour
     void PlayerTouch(Vector3 pos)
     {
         RaycastHit hit;
-        if (Physics.Raycast(camera.ScreenPointToRay(pos), out hit, 10000, RaycastLayer))
+        if (Physics.Raycast(camera.ScreenPointToRay(pos), out hit, 10000, RaycastEnemyLayer))
         {
             hit.transform.GetComponent<EnemyView>().TakeDamage(100);
         }

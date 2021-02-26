@@ -762,9 +762,7 @@ public class GameController : MonoBehaviour
         //TODO Вознаграждение для каждого типо врагов
 
         Points += enemy.SOEnemy.HP;
-
-        GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        obj.AddComponent<MoneyView>();
+        
         /*
         switch (type)
         {
@@ -795,8 +793,8 @@ public class GameController : MonoBehaviour
                 break;
 
         }
-             Вознаграждение   */ 
-        
+             Вознаграждение   */
+
     }
 
     void AddReward(string Name, float Count)

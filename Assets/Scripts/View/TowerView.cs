@@ -15,6 +15,32 @@ public class TowerView : MonoBehaviour
     private float Damage => GameController.GameState.current.Get("Damage");
     private float AttackRange => GameController.GameState.current.Get("AttackRange");
     private float AttackSpeed => GameController.GameState.current.Get("AttackSpeed");
+    private float ExplosiveChance => GameController.GameState.current.Get("ExplosiveChance");
+    private float DamageAura => GameController.GameState.current.Get("DamageAura");
+    private float DamageAuraEffect => GameController.GameState.current.Get("DamageAuraEffect");
+    private float DefenseAuraEffect => GameController.GameState.current.Get("DefenseAuraEffect");
+    private float DefenseAura => GameController.GameState.current.Get("DefenseAura");
+    private float DefenseAuraRadius => GameController.GameState.current.Get("DefenseAuraRadius");
+    private float BlockChance => GameController.GameState.current.Get("BlockChance");
+    private float IceAmmoEffectRadius => GameController.GameState.current.Get("IceAmmoEffectRadius");
+    private float IceAmmoEffect => GameController.GameState.current.Get("IceAmmoEffect");
+    private float FireAmmoDamageEffect => GameController.GameState.current.Get("FireAmmoDamageEffect");
+    private float FireAmmoChance => GameController.GameState.current.Get("FireAmmoChance");
+    private float RapidFireTime => GameController.GameState.current.Get("RapidFireTime");
+    private float RapidFireChance => GameController.GameState.current.Get("RapidFireChance");
+    private float BounceCount => GameController.GameState.current.Get("BounceCount");
+    private float BounceChance => GameController.GameState.current.Get("BounceChance");
+    private float CriticalChance => GameController.GameState.current.Get("CriticalChance");
+    //private float  => GameController.GameState.current.Get("");
+    //private float  => GameController.GameState.current.Get("");
+    //private float  => GameController.GameState.current.Get("");
+    //private float  => GameController.GameState.current.Get("");
+    //private float  => GameController.GameState.current.Get("");
+    //private float  => GameController.GameState.current.Get("");
+    
+
+    
+
 
     void Start()
     {
